@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taarou Sénégal - T-shirts Africains Élégants</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --primary: #FF6B00;
+            --secondary: #000000;
+            --accent: #FFD700;
+            --bg-light: #F8F8F8;
+            --bg-dark: #121212;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--secondary);
+            overflow-x: hidden;
+        }
+        
+        .tshirt-container {
+            perspective: 1000px;
+            transform-style: preserve-3d;
+        }
+        
+        .tshirt-card {
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease;
+        }
+        
+        .tshirt-image {
+            transform-style: preserve-3d;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotateY(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotateY(10deg);
+            }
+        }
+        
+        .color-option {
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .color-option:hover {
+            transform: scale(1.1);
+        }
+        
+        .color-option.active {
+            border-color: var(--accent);
+            transform: scale(1.1);
+        }
+        
+        .bg-theme-changer {
+            transition: background-color 0.8s ease;
+        }
+        
+        .cart-item {
+            animation: slideIn 0.5s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .add-to-cart-btn {
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            transform: translateZ(0);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .add-to-cart-btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .add-to-cart-btn:active {
+            transform: translateY(1px) scale(0.98);
+        }
+
+        .add-to-cart-btn::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+
+        .add-to-cart-btn:focus:not(:active)::after {
+            animation: ripple 1s ease-out;
+        }
+
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(20, 20);
+                opacity: 0;
+            }
+        }
+        
+        /* 3D effect for product showcase */
+        .product-showcase {
+            transform-style: preserve-3d;
+            perspective: 1500px;
+        }
+        
+        .product-image {
+            transform: rotateY(-15deg);
+            transition: transform 0.5s ease;
+            box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.2);
+        }
+        
+        .product-image:hover {
+            transform: rotateY(0deg) translateY(-10px);
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .product-image {
+                transform: rotateY(0deg);
+            }
+            
+            .tshirt-image {
+                animation: float-mobile 6s ease-in-out infinite;
+            }
+            
+            @keyframes float-mobile {
+                0%, 100% {
+                    transform: translateY(0) rotateY(0deg);
+                }
+                50% {
+                    transform: translateY(-10px) rotateY(5deg);
+                }
+            }
+        }
+    </style>
+</head>
+<body class="bg-theme-changer">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg fixed w-full z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <span class="text-2xl font-bold text-primary" style="color: var(--primary);">TAAROU</span>
+                        <span class="text-2xl font-bold ml-1">SÉNÉGAL</span>
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#" class="nav-link text-gray-700 hover:text-primary px-3 py-2 text-sm font-medium">Accueil</a>
+                    <a href="#about" class="nav-link text-gray-700 hover:text-primary px-3 py-2 text-sm font-medium">À Propos</a>
+                    <a href="#contact" class="nav-link text-gray-700 hover:text-primary px-3 py-2 text-sm font-medium">Contact</a>
+                </div>
+                <div class="flex items-center">
+                    <button id="cart-toggle" class="p-1 rounded-full text-gray-700 hover:text-primary focus:outline-none relative">
+                        <i class="fas fa-shopping-cart text-xl"></i>
+                        <span id="cart-count" class="absolute -top-2 -right-2 bg-primary text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                    </button>
+                    <button class="md:hidden ml-4 p-1 rounded-full text-gray-700 hover:text-primary focus:outline-none" id="mobile-menu-button">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div class="md:hidden hidden bg-white shadow-lg" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-primary">Accueil</a>
+                <a href="#about" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-primary">À Propos</a>
+                <a href="#contact" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-primary">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="pt-24 pb-16 md:pt-32 md:pb-24 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="md:flex items-center justify-between">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <h1 class="text-4xl md:text-6xl font-bold leading-tight mb-4">T-shirts Africains <span class="text-primary" style="color: var(--primary);">Élégants</span></h1>
+                    <p class="text-lg md:text-xl text-gray-600 mb-8">Découvrez notre collection exclusive inspirée de la culture sénégalaise. Des designs uniques, des tissus de qualité et un confort inégalé.</p>
+                    <a href="produits.html" class="inline-block border-2 border-black bg-blacktext-white font-bold py-3 px-8 rounded-full hover:bg-opacity-90 transition duration-300 transform hover:scale-105">
+                    Voir la collection
+                    </a>
+                </div>
+                <div class="md:w-1/2 flex justify-center tshirt-container">
+                    <div class="tshirt-card relative w-64 h-64 md:w-80 md:h-80">
+                        <img src="taar1.jpg" alt="T-shirt Taarou Sénégal" class="tshirt-image absolute w-full h-full object-contain">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- About Section -->
+    <section id="about" class="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <div class="max-w-7xl mx-auto">
+            <div class="md:flex items-center gap-12">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <img src="logotaar.jpg" alt="À propos de Taarou Sénégal" class="w-full rounded-lg shadow-xl">
+                </div>
+                <div class="md:w-1/2">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6">Notre <span class="text-primary" style="color: var(--primary);">Histoire</span></h2>
+                    <p class="text-gray-600 mb-4">Taarou Sénégal est née de la passion pour la mode africaine contemporaine et du désir de partager la richesse culturelle du Sénégal avec le monde.</p>
+                    <p class="text-gray-600 mb-4">Chaque pièce de notre collection est conçue avec soin, mélangeant motifs traditionnels et designs modernes pour créer des vêtements uniques qui racontent une histoire.</p>
+                    <p class="text-gray-600 mb-6">Nous nous engageons à utiliser des matériaux de qualité et des méthodes de production éthiques pour minimiser notre impact environnemental tout en soutenant les artisans locaux.</p>
+                    <div class="flex space-x-4">
+                        <div class="bg-white p-4 rounded-lg shadow-sm text-center">
+                            <i class="fas fa-tshirt text-3xl text-primary mb-2"></i>
+                            <h4 class="font-bold">Qualité Premium</h4>
+                            <p class="text-sm text-gray-600">Tissus durables et confortables</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow-sm text-center">
+                            <i class="fas fa-hands-helping text-3xl text-primary mb-2"></i>
+                            <h4 class="font-bold">Artisanat Local</h4>
+                            <p class="text-sm text-gray-600">Soutien aux artisans sénégalais</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow-sm text-center">
+                            <i class="fas fa-leaf text-3xl text-primary mb-2"></i>
+                            <h4 class="font-bold">Éco-responsable</h4>
+                            <p class="text-sm text-gray-600">Production durable</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-16 px-4 sm:px-6 lg:px-8 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Contactez-<span class="text-primary" style="color: var(--primary);">nous</span></h2>
+            
+            <div class="md:flex gap-12">
+                
+                <div class="md:w-1/2">
+                    <div class="bg-gray-50 p-8 rounded-lg h-full">
+                        <h3 class="text-xl font-bold mb-4">Informations de contact</h3>
+                        
+                        <div class="space-y-4">
+                            
+                            <div class="flex items-start">
+                                <i class="fas fa-phone-alt text-primary mt-1 mr-4"></i>
+                                <div>
+                                    <h4 class="font-medium">Téléphone</h4>
+                                    <p class="text-gray-600">+39 351 776 2883</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <i class="fas fa-envelope text-primary mt-1 mr-4"></i>
+                                <div>
+                                    <h4 class="font-medium">Email</h4>
+                                    <p class="text-gray-600">Tarrousenegal4@gmail.com</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <i class="fab fa-whatsapp text-primary mt-1 mr-4 text-xl"></i>
+                                <div>
+                                    <h4 class="font-medium">WhatsApp</h4>
+                                    <p class="text-gray-600">+39 351 776 2883</p>
+                                    <a href="https://wa.me/393517762883?text=Bonjour,%20je%20souhaite%20avoir%20plus%20d'informations%20sur%20vos%20produits" class="inline-block mt-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition">
+                                        <i class="fab fa-whatsapp mr-2"></i>Envoyer un message
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-8">
+                            <h3 class="text-xl font-bold mb-4">Suivez-nous</h3>
+                            <div class="flex space-x-4">
+                                <a href="https://www.instagram.com/tarru_senegal_?igsh=MWgzaXgxMWpmdjRudw==" class="social-icon w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-700 hover:bg-primary hover:text-white transition">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                                <a href="https://www.tiktok.com/@tarrusenegal?_t=ZM-8y7F8ZDVgE1&_r=1" class="social-icon w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-700 hover:bg-primary hover:text-white transition">
+                                    <i class="fab fa-tiktok"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="md:flex justify-between">
+                <div class="mb-8 md:mb-0">
+                    <div class="flex items-center mb-4">
+                        <span class="text-2xl font-bold text-primary">TARROU</span>
+                        <span class="text-2xl font-bold ml-1">SÉNÉGAL</span>
+                    </div>
+                    <p class="text-gray-400 max-w-xs">Vêtements inspirés par la culture sénégalaise, conçus pour le monde moderne.</p>
+                </div>
+                
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4">Navigation</h3>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-400 hover:text-primary transition">Accueil</a></li>
+                            <li><a href="#about" class="text-gray-400 hover:text-primary transition">À Propos</a></li>
+                            <li><a href="#contact" class="text-gray-400 hover:text-primary transition">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 text-sm mb-4 md:mb-0">© 2025 Taarou Sénégal. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Shopping Cart Sidebar -->
+    <div id="cart-sidebar" class="fixed top-0 right-0 h-full w-full md:w-96 bg-white shadow-lg transform translate-x-full transition-transform duration-300 ease-in-out z-50 overflow-y-auto">
+        <div class="p-6">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold">Votre Panier</h3>
+                <button id="close-cart" class="text-gray-500 hover:text-primary">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <div id="cart-items" class="space-y-4 mb-6">
+                <!-- Cart items will be added here dynamically -->
+                <div class="text-center py-8" id="empty-cart-message">
+                    <i class="fas fa-shopping-cart text-4xl text-gray-300 mb-4"></i>
+                    <p class="text-gray-500">Votre panier est vide</p>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-200 pt-4 mb-6">
+                <div class="flex justify-between mb-2">
+                    <span class="text-gray-600">Sous-total</span>
+                    <span id="cart-subtotal" class="font-medium">0.00€</span>
+                </div>
+                <div class="flex justify-between mb-2">
+                    <span class="text-gray-600">Livraison</span>
+                    <span class="font-medium">Calculé à l'étape suivante</span>
+                </div>
+                <div class="flex justify-between text-lg font-bold mt-4">
+                    <span>Total</span>
+                    <span id="cart-total">0.00€</span>
+                </div>
+            </div>
+            
+            <div class="space-y-4">
+                <a href="#" id="checkout-btn" class="block bg-primary text-white text-center font-bold py-3 px-6 rounded hover:bg-opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                    Passer la commande
+                </a>
+                <a href="https://wa.me/393517762883?text=Bonjour,%20je%20souhaite%20commander%20les%20articles%20suivants%20:%0A%0A[ITEMS_LIST]%0A%0AMerci%20!" id="whatsapp-checkout" class="block bg-green-500 text-white text-center font-bold py-3 px-6 rounded hover:bg-green-600 transition flex items-center justify-center" target="_blank">
+                    <i class="fab fa-whatsapp mr-2 text-xl"></i> Commander via WhatsApp
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Overlay for cart sidebar -->
+    <div id="cart-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden"></div>
+
+    <!-- Back to top button -->
+    <button id="back-to-top" class="fixed bottom-8 right-8 bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:bg-opacity-90 transition hidden">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // Product data
+        const products = [
+            {
+                id: 1,
+                name: "Dakar Vibes",
+                description: "Inspiré par l'énergie vibrante de Dakar, ce t-shirt capture l'essence de la capitale sénégalaise avec des motifs géométriques traditionnels.",
+                price: 29.99,
+                colors: ["white", "green", "orange"],
+                sizes: ["S", "M", "L", "XL", "XXL"],
+                image: "taar1.jpg",
+                theme: "#FF6B00"
+            },
+        ];
+
+        // Current product index
+        let currentProductIndex = 0;
+        let cart = [];
+        
+        // DOM elements
+        const currentProductImage = document.getElementById('current-product-image');
+        const currentProductName = document.getElementById('current-product-name');
+        const currentProductDescription = document.getElementById('current-product-description');
+        const currentProductPrice = document.getElementById('current-product-price');
+        const currentProductTitle = document.getElementById('current-product-title');
+        const prevProductBtn = document.getElementById('prev-product');
+        const nextProductBtn = document.getElementById('next-product');
+        const colorOptions = document.querySelectorAll('.color-option');
+        const sizeOptions = document.querySelectorAll('.size-option');
+        const quantityElement = document.getElementById('quantity');
+        const incrementBtn = document.getElementById('increment');
+        const decrementBtn = document.getElementById('decrement');
+        const addToCartBtn = document.getElementById('add-to-cart');
+        const cartToggle = document.getElementById('cart-toggle');
+        const closeCartBtn = document.getElementById('close-cart');
+        const cartSidebar = document.getElementById('cart-sidebar');
+        const cartOverlay = document.getElementById('cart-overlay');
+        const cartItemsContainer = document.getElementById('cart-items');
+        const emptyCartMessage = document.getElementById('empty-cart-message');
+        const cartCount = document.getElementById('cart-count');
+        const cartSubtotal = document.getElementById('cart-subtotal');
+        const cartTotal = document.getElementById('cart-total');
+        const checkoutBtn = document.getElementById('checkout-btn');
+        const whatsappCheckout = document.getElementById('whatsapp-checkout');
+        const backToTopBtn = document.getElementById('back-to-top');
+        const bgThemeChanger = document.querySelector('.bg-theme-changer');
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            updateProductDisplay();
+            loadCart();
+            updateCartUI();
+            
+            // Set initial theme
+            document.documentElement.style.setProperty('--primary', products[currentProductIndex].theme);
+            bgThemeChanger.style.backgroundColor = `${products[currentProductIndex].theme}20`; // Add opacity
+            
+            // Set first color option as active
+            if (colorOptions.length > 0) {
+                colorOptions[0].classList.add('active');
+            }
+            
+            // Set first size option as active
+            if (sizeOptions.length > 0) {
+                sizeOptions[2].classList.add('active'); // Default to 'L'
+            }
+        });
+        
+        // Product navigation
+        prevProductBtn.addEventListener('click', () => {
+            currentProductIndex = (currentProductIndex - 1 + products.length) % products.length;
+            animateProductChange('left');
+            updateProductDisplay();
+        });
+        
+        nextProductBtn.addEventListener('click', () => {
+            currentProductIndex = (currentProductIndex + 1) % products.length;
+            animateProductChange('right');
+            updateProductDisplay();
+        });
+        
+        function animateProductChange(direction) {
+            const productImage = document.querySelector('.product-image');
+            const productInfo = document.querySelector('.md\\:w-1\\/2:last-child');
+            
+            // Reset animations
+            gsap.killTweensOf([productImage, productInfo]);
+            
+            // Animate out
+            gsap.to(productImage, {
+                x: direction === 'right' ? -100 : 100,
+                opacity: 0,
+                duration: 0.3,
+                ease: "power2.inOut",
+                onComplete: () => {
+                    updateProductDisplay();
+                    
+                    // Animate in
+                    gsap.fromTo(productImage, 
+                        { x: direction === 'right' ? 100 : -100, opacity: 0 },
+                        { x: 0, opacity: 1, duration: 0.5, ease: "power2.out" }
+                    );
+                }
+            });
+            
+            gsap.to(productInfo, {
+                y: 20,
+                opacity: 0,
+                duration: 0.3,
+                ease: "power2.inOut"
+            });
+            
+            gsap.fromTo(productInfo, 
+                { y: -20, opacity: 0 },
+                { y: 0, opacity: 1, duration: 0.5, ease: "power2.out", delay: 0.3 }
+            );
+        }
+        
+        function updateProductDisplay() {
+            const currentProduct = products[currentProductIndex];
+            
+            // Update product info
+            currentProductImage.src = currentProduct.image;
+            currentProductImage.alt = currentProduct.name;
+            currentProductName.textContent = currentProduct.name;
+            currentProductDescription.textContent = currentProduct.description;
+            currentProductPrice.textContent = `${currentProduct.price.toFixed(2)}€`;
+            currentProductTitle.textContent = currentProduct.name;
+            
+            // Update theme
+            document.documentElement.style.setProperty('--primary', currentProduct.theme);
+            gsap.to(bgThemeChanger, {
+                backgroundColor: `${currentProduct.theme}20`,
+                duration: 0.8,
+                ease: "power2.out"
+            });
+            
+            // Update color options
+            colorOptions.forEach(option => {
+                option.style.display = currentProduct.colors.includes(option.dataset.color) ? 'block' : 'none';
+            });
+            
+            // Reset active color to first available
+            colorOptions.forEach(option => option.classList.remove('active'));
+            const firstAvailableColor = document.querySelector(`.color-option[data-color="${currentProduct.colors[0]}"]`);
+            if (firstAvailableColor) firstAvailableColor.classList.add('active');
+            
+            // Reset quantity
+            quantityElement.textContent = '1';
+        }
+        
+        // Color selection
+        colorOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                colorOptions.forEach(opt => opt.classList.remove('active'));
+                option.classList.add('active');
+                
+                // In a real app, we would update the product image to show the selected color
+                // For this demo, we'll just animate the selection
+                gsap.to(option, {
+                    scale: 1.2,
+                    duration: 0.2,
+                    yoyo: true,
+                    repeat: 1
+                });
+            });
+        });
+        
+        // Size selection
+        sizeOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                sizeOptions.forEach(opt => opt.classList.remove('active'));
+                option.classList.add('active');
+                
+                // Animation
+                gsap.to(option, {
+                    backgroundColor: getComputedStyle(document.documentElement).getPropertyValue('--primary'),
+                    color: '#fff',
+                    duration: 0.3
+                });
+            });
+        });
+        
+        // Quantity adjustment
+        let quantity = 1;
+        
+        incrementBtn.addEventListener('click', () => {
+            quantity++;
+            quantityElement.textContent = quantity;
+            
+            // Animation
+            gsap.fromTo(quantityElement, 
+                { scale: 1.2 }, 
+                { scale: 1, duration: 0.3 }
+            );
+        });
+        
+        decrementBtn.addEventListener('click', () => {
+            if (quantity > 1) {
+                quantity--;
+                quantityElement.textContent = quantity;
+                
+                // Animation
+                gsap.fromTo(quantityElement, 
+                    { scale: 0.8 }, 
+                    { scale: 1, duration: 0.3 }
+                );
+            }
+        });
+        
+        // Add to cart
+        addToCartBtn.addEventListener('click', () => {
+            const currentProduct = products[currentProductIndex];
+            const selectedColor = document.querySelector('.color-option.active').dataset.color;
+            const selectedSize = document.querySelector('.size-option.active').textContent;
+            const quantity = parseInt(quantityElement.textContent);
+            
+            // Check if this product with same color and size is already in cart
+            const existingItemIndex = cart.findIndex(item => 
+                item.id === currentProduct.id && 
+                item.color === selectedColor && 
+                item.size === selectedSize
+            );
+            
+            if (existingItemIndex !== -1) {
+                // Update quantity
+                cart[existingItemIndex].quantity += quantity;
+            } else {
+                // Add new item
+                cart.push({
+                    id: currentProduct.id,
+                    name: currentProduct.name,
+                    price: currentProduct.price,
+                    color: selectedColor,
+                    size: selectedSize,
+                    quantity: quantity,
+                    image: currentProduct.image
+                });
+            }
+            
+            // Save to localStorage
+            saveCart();
+            
+            // Update UI
+            updateCartUI();
+            
+            // Show success animation
+            gsap.to(addToCartBtn, {
+                backgroundColor: '#10B981',
+                duration: 0.3,
+                onComplete: () => {
+                    gsap.to(addToCartBtn, {
+                        backgroundColor: getComputedStyle(document.documentElement).getPropertyValue('--primary'),
+                        delay: 1,
+                        duration: 0.3
+                    });
+                }
+            });
+            
+            // Button text animation
+            const originalText = addToCartBtn.textContent;
+            addToCartBtn.innerHTML = '<i class="fas fa-check mr-2"></i> Ajouté !';
+            
+            setTimeout(() => {
+                addToCartBtn.textContent = originalText;
+            }, 1500);
+            
+            // Open cart if not already open
+            if (!cartSidebar.classList.contains('translate-x-0')) {
+                openCart();
+            }
+        });
+        
+        // Cart functions
+        function saveCart() {
+            localStorage.setItem('taarouCart', JSON.stringify(cart));
+        }
+        
+        function loadCart() {
+            const savedCart = localStorage.getItem('taarouCart');
+            if (savedCart) {
+                cart = JSON.parse(savedCart);
+            }
+        }
+        
+        function updateCartUI() {
+            // Update cart count
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = totalItems;
+            
+            // Update cart items
+            cartItemsContainer.innerHTML = '';
+            
+            if (cart.length === 0) {
+                emptyCartMessage.style.display = 'block';
+                checkoutBtn.disabled = true;
+            } else {
+                emptyCartMessage.style.display = 'none';
+                checkoutBtn.disabled = false;
+                
+                cart.forEach((item, index) => {
+                    const cartItem = document.createElement('div');
+                    cartItem.className = 'cart-item flex items-center justify-between p-4 bg-gray-50 rounded-lg';
+                    cartItem.innerHTML = `
+                        <div class="flex items-center">
+                            <img src="${item.image}" alt="${item.name}" class="w-16 h-16 object-cover rounded">
+                            <div class="ml-4">
+                                <h4 class="font-medium">${item.name}</h4>
+                                <p class="text-sm text-gray-600">${item.color} / ${item.size}</p>
+                                <div class="flex items-center mt-1">
+                                    <button class="decrease-quantity text-gray-500 hover:text-primary" data-index="${index}">
+                                        <i class="fas fa-minus text-xs"></i>
+                                    </button>
+                                    <span class="mx-2">${item.quantity}</span>
+                                    <button class="increase-quantity text-gray-500 hover:text-primary" data-index="${index}">
+                                        <i class="fas fa-plus text-xs"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p class="font-medium">${(item.price * item.quantity).toFixed(2)}€</p>
+                            <button class="remove-item text-red-500 hover:text-red-700 text-sm mt-1" data-index="${index}">
+                                <i class="fas fa-trash"></i> Supprimer
+                            </button>
+                        </div>
+                    `;
+                    cartItemsContainer.appendChild(cartItem);
+                });
+            }
+            
+            // Update totals
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            cartSubtotal.textContent = `${subtotal.toFixed(2)}€`;
+            cartTotal.textContent = `${subtotal.toFixed(2)}€`;
+            
+            // Update WhatsApp link with pre-filled message
+            let message = `Bonjour, je souhaite commander les articles suivants :%0A%0A`;
+            
+            cart.forEach(item => {
+                message += `- ${item.quantity}x ${item.name} (${item.color}, ${item.size}) : ${(item.price * item.quantity).toFixed(2)}€%0A`;
+            });
+            
+            message += `%0ATotal : ${subtotal.toFixed(2)}€%0A%0AMerci !`;
+            
+            // Format WhatsApp message with cart items
+            let itemsList = '';
+            cart.forEach(item => {
+                itemsList += `- ${item.quantity}x ${item.name} (${item.color}, ${item.size}) : ${(item.price * item.quantity).toFixed(2)}€%0A`;
+            });
+            
+            const whatsappMessage = `Bonjour,%20je%20souhaite%20commander%20les%20articles%20suivants%20:%0A%0A${itemsList}%0ATotal%20:%20${subtotal.toFixed(2)}€%0A%0AMerci%20!`;
+            
+            whatsappCheckout.href = `https://wa.me/393517762883?text=${whatsappMessage}`;
+            whatsappCheckout.target = '_blank';
+        }
+        
+        // Cart event delegation
+        cartItemsContainer.addEventListener('click', (e) => {
+            // Increase quantity
+            if (e.target.classList.contains('increase-quantity') || e.target.parentElement.classList.contains('increase-quantity')) {
+                const button = e.target.classList.contains('increase-quantity') ? e.target : e.target.parentElement;
+                const index = parseInt(button.dataset.index);
+                cart[index].quantity++;
+                saveCart();
+                updateCartUI();
+            }
+            
+            // Decrease quantity
+            if (e.target.classList.contains('decrease-quantity') || e.target.parentElement.classList.contains('decrease-quantity')) {
+                const button = e.target.classList.contains('decrease-quantity') ? e.target : e.target.parentElement;
+                const index = parseInt(button.dataset.index);
+                if (cart[index].quantity > 1) {
+                    cart[index].quantity--;
+                    saveCart();
+                    updateCartUI();
+                }
+            }
+            
+            // Remove item
+            if (e.target.classList.contains('remove-item') || e.target.parentElement.classList.contains('remove-item')) {
+                const button = e.target.classList.contains('remove-item') ? e.target : e.target.parentElement;
+                const index = parseInt(button.dataset.index);
+                cart.splice(index, 1);
+                saveCart();
+                updateCartUI();
+                
+                // Animation for removal
+                const itemToRemove = button.closest('.cart-item');
+                gsap.to(itemToRemove, {
+                    opacity: 0,
+                    x: 100,
+                    duration: 0.3,
+                    onComplete: () => {
+                        itemToRemove.remove();
+                    }
+                });
+            }
+        });
+        
+        // Cart toggle
+        function openCart() {
+            cartSidebar.classList.remove('translate-x-full');
+            cartSidebar.classList.add('translate-x-0');
+            cartOverlay.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeCart() {
+            cartSidebar.classList.remove('translate-x-0');
+            cartSidebar.classList.add('translate-x-full');
+            cartOverlay.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+        
+        cartToggle.addEventListener('click', openCart);
+        closeCartBtn.addEventListener('click', closeCart);
+        cartOverlay.addEventListener('click', closeCart);
+
+        // Mobile menu toggle
+        mobileMenuButton.addEventListener('click', () => {
+            if (mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.remove('hidden');
+                mobileMenu.classList.add('block');
+            } else {
+                mobileMenu.classList.remove('block');
+                mobileMenu.classList.add('hidden');
+            }
+        });
+        
+        // Back to top button
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopBtn.classList.remove('hidden');
+            } else {
+                backToTopBtn.classList.add('hidden');
+            }
+        });
+        
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.remove('block');
+                        mobileMenu.classList.add('hidden');
+                    }
+                }
+            });
+        });
+        
+        // 3D effect for t-shirt on hover
+        const tshirtContainer = document.querySelector('.tshirt-container');
+        const tshirtCard = document.querySelector('.tshirt-card');
+        
+        tshirtContainer.addEventListener('mousemove', (e) => {
+            const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
+            const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
+            tshirtCard.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+        });
+        
+        tshirtContainer.addEventListener('mouseenter', () => {
+            tshirtCard.style.transition = 'none';
+        });
+        
+        tshirtContainer.addEventListener('mouseleave', () => {
+            tshirtCard.style.transition = 'transform 0.5s ease';
+            tshirtCard.style.transform = 'rotateY(0deg) rotateX(0deg)';
+        });
+    </script>
+    <script>
+  const images = [
+    "taar2.jpg",
+    "taar3.jpg",
+    "taar4.jpg"
+  ];
+
+  let currentImageIndex = 0;
+  const imageEl = document.getElementById('product-carousel-image');
+
+  function showImage(index) {
+    imageEl.src = images[index];
+  }
+
+  function prevImage() {
+    currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+    showImage(currentImageIndex);
+  }
+
+  function nextImage() {
+    currentImageIndex = (currentImageIndex + 1) % images.length;
+    showImage(currentImageIndex);
+  }
+
+  // Charger la première image
+  showImage(currentImageIndex);
+</script>
+</body>
+</html>
