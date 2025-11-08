@@ -1,543 +1,265 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Taarou Sénégal - T-shirts Premium</title>
-    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
-    <script>tailwind.config={theme:{extend:{colors:{primary:'#10B981',secondary:'#059669'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <style>
-        :where([class^="ri-"])::before { content: "\f3c2"; }
-        .product-3d {
-            background: linear-gradient(135deg, rgba(87, 181, 231, 0.1), rgba(141, 211, 199, 0.1));
-            backdrop-filter: blur(10px);
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Taarou Sénégal - T-shirts Premium</title>
+  <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { primary: '#10B981', secondary: '#059669' },
+          borderRadius: {
+            none: '0px', sm: '4px', DEFAULT: '8px',
+            md: '12px', lg: '16px', xl: '20px',
+            '2xl': '24px', '3xl': '32px', full: '9999px', button: '8px'
+          }
         }
-        .cart-counter {
-            animation: pulse 0.3s ease-in-out;
-        }
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-            100% { transform: scale(1); }
-        }
-        .product-transition {
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .size-selector:checked + label {
-            background-color: #10B981;
-            color: white;
-        }
-        .color-selector:checked + label {
-            border: 3px solid #10B981;
-            transform: scale(1.1);
-        }
-        .floating-animation {
-            animation: float 3s ease-in-out infinite;
-        }
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-        .rotate-3d {
-            animation: rotate3d 8s linear infinite;
-        }
-        @keyframes rotate3d {
-            0% { transform: rotateY(0deg); }
-            100% { transform: rotateY(360deg); }
-        }
-        .bg-dynamic {
-            background: linear-gradient(45deg, #57b5e7, #8dd3c7, #fbbf72, #fc8d62);
-            background-size: 400% 400%;
-            animation: gradientShift 6s ease infinite;
-        }
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-    </style>
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+  <style>
+    .product-3d {
+      background: linear-gradient(135deg, rgba(87, 181, 231, 0.1), rgba(141, 211, 199, 0.1));
+      backdrop-filter: blur(10px);
+    }
+    .cart-counter { animation: pulse 0.3s ease-in-out; }
+    @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
+    .product-transition { transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
+    .size-selector:checked + label { background-color: #10B981; color: white; }
+    .color-selector:checked + label { border: 3px solid #10B981; transform: scale(1.1); }
+    .floating-animation { animation: float 3s ease-in-out infinite; }
+    @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
+    .rotate-3d { animation: rotate3d 8s linear infinite; }
+    @keyframes rotate3d { 0% { transform: rotateY(0deg); } 100% { transform: rotateY(360deg); } }
+    .bg-dynamic {
+      background: linear-gradient(45deg, #57b5e7, #8dd3c7, #fbbf72, #fc8d62);
+      background-size: 400% 400%;
+      animation: gradientShift 6s ease infinite;
+    }
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+  </style>
 </head>
+
 <body class="bg-white overflow-x-hidden">
-    <!-- Header -->
-    <header class="fixed top-0 w-full bg-white/90 backdrop-blur-md z-50 border-b border-gray-100">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <!-- Menu Mobile -->
-                <button id="mobile-menu-btn" class="lg:hidden w-8 h-8 flex items-center justify-center">
-                    <i class="ri-menu-line text-xl"></i>
-                </button>
-                
-                <!-- Logo -->
-                <div class="flex-1 flex justify-center lg:justify-start">
-                    <h1 class="font-['Pacifico'] text-2xl text-gray-900">Tarrou Sénégal</h1>
-                </div>
-                
-                <!-- Cart -->
-                <div class="relative">
-                    <button id="cart-btn" class="w-10 h-10 flex items-center justify-center relative">
-                        <i class="ri-shopping-cart-line text-xl"></i>
-                        <span id="cart-count" class="absolute -top-2 -right-2 bg-primary text-white text-xs rounded-full w-5 h-5 flex items-center justify-center cart-counter">0</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </header>
 
-    <!-- Main Content -->
-    <main class="pt-16 min-h-screen bg-dynamic">
+  <!-- Header -->
+  <header class="fixed top-0 w-full bg-white/90 backdrop-blur-md z-50 border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <!-- Menu Mobile -->
+        <button id="mobile-menu-btn" class="lg:hidden w-8 h-8 flex items-center justify-center">
+          <i class="ri-menu-line text-xl"></i>
+        </button>
 
-        <!-- Product Display -->
-        <section class="py-12">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="grid lg:grid-cols-2 gap-12 items-center">
-                    <!-- 3D Product Viewer -->
-                    <div class="relative">
-                        <div class="product-3d rounded-3xl p-8 min-h-[600px] flex items-center justify-center relative overflow-hidden">
-                            <!-- Navigation Arrows -->
-                            <button id="prev-btn" class="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/80 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-colors z-10">
-                                <i class="ri-arrow-left-line text-xl"></i>
-                            </button>
-                            <button id="next-btn" class="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/80 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-colors z-10">
-                                <i class="ri-arrow-right-line text-xl"></i>
-                            </button>
-                            
-                            <!-- Product Image -->
-                            <div class="relative">
-                                <img id="product-image" src="taar1.jpg">
-                                
-                                <!-- Zoom Controls -->
-                                <div class="absolute top-4 right-4 flex flex-col gap-2">
-                                    <button class="w-8 h-8 bg-white/80 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-colors">
-                                        <i class="ri-zoom-in-line text-sm"></i>
-                                    </button>
-                                    <button class="w-8 h-8 bg-white/80 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-colors">
-                                        <i class="ri-zoom-out-line text-sm"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Product Indicators -->
-                        <div class="flex justify-center mt-6 gap-2">
-                            <button class="w-3 h-3 bg-primary rounded-full indicator-dot active"></button>
-                            <button class="w-3 h-3 bg-gray-300 rounded-full indicator-dot"></button>
-                            <button class="w-3 h-3 bg-gray-300 rounded-full indicator-dot"></button>
-                            <button class="w-3 h-3 bg-gray-300 rounded-full indicator-dot"></button>
-                            <button class="w-3 h-3 bg-gray-300 rounded-full indicator-dot"></button>
-                        </div>
-                        
-                        <div class="text-center mt-4">
-                            <span class="text-sm text-gray-600">1 / 5</span>
-                        </div>
-                    </div>
-                    
-                    <!-- Product Info -->
-                    <div class="space-y-8">
-                        <div>
-                            <h2 id="product-name" class="text-4xl font-bold text-gray-900 mb-4">T-shirt Dakar Premium</h2>
-                            <p id="product-price" class="text-3xl font-bold text-primary mb-6">25€</p>
-                            <p id="product-description" class="text-gray-600 leading-relaxed">T-shirt en coton bio de qualité supérieure, inspiré des couleurs vibrantes du Sénégal. Coupe moderne et confortable, parfait pour un style décontracté et authentique.</p>
-                        </div>
-                        
-                        <!-- Size Selection -->
-                        <div>
-                            <h3 class="text-lg font-semibold text-gray-900 mb-4">Taille</h3>
-                            <div class="flex gap-3">
-                                <input type="radio" id="size-s-product" name="product-size" value="S" class="sr-only size-selector">
-                                <label for="size-s-product" class="w-12 h-12 border-2 border-gray-300 rounded-button flex items-center justify-center cursor-pointer hover:border-primary transition-colors">S</label>
-                                <input type="radio" id="size-m-product" name="product-size" value="M" class="sr-only size-selector" checked>
-                                <label for="size-m-product" class="w-12 h-12 border-2 border-gray-300 rounded-button flex items-center justify-center cursor-pointer hover:border-primary transition-colors">M</label>
-                                <input type="radio" id="size-l-product" name="product-size" value="L" class="sr-only size-selector">
-                                <label for="size-l-product" class="w-12 h-12 border-2 border-gray-300 rounded-button flex items-center justify-center cursor-pointer hover:border-primary transition-colors">L</label>
-                                <input type="radio" id="size-xl-product" name="product-size" value="XL" class="sr-only size-selector">
-                                <label for="size-xl-product" class="w-12 h-12 border-2 border-gray-300 rounded-button flex items-center justify-center cursor-pointer hover:border-primary transition-colors">XL</label>
-                            </div>
-                        </div>
-                        
-                        <!-- Action Buttons -->
-                        <div class="space-y-4">
-                            <button id="add-to-cart" class="w-full bg-primary hover:bg-secondary text-white font-semibold py-4 px-8 !rounded-button transition-colors whitespace-nowrap">
-                                <i class="ri-shopping-cart-line mr-2"></i>
-                                Ajouter au panier
-                            </button>
-                            <button id="whatsapp-order" class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-4 px-8 !rounded-button transition-colors whitespace-nowrap">
-                                <i class="ri-whatsapp-line mr-2"></i>
-                                Commander via WhatsApp
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-    <!-- Cart Sidebar -->
-    <div id="cart-sidebar" class="fixed right-0 top-0 h-full w-96 bg-white shadow-2xl transform translate-x-full transition-transform duration-300 z-50">
-        <div class="p-6 border-b border-gray-200">
-            <div class="flex items-center justify-between">
-                <h3 class="text-xl font-semibold">Panier</h3>
-                <button id="close-cart" class="w-8 h-8 flex items-center justify-center">
-                    <i class="ri-close-line text-xl"></i>
-                </button>
-            </div>
+        <!-- Logo -->
+        <div class="flex-1 flex justify-center lg:justify-start">
+          <h1 class="font-['Pacifico'] text-2xl text-gray-900">Taarou Sénégal</h1>
         </div>
-        <div id="cart-items" class="flex-1 overflow-y-auto p-6">
-            <p class="text-gray-500 text-center">Votre panier est vide</p>
+
+        <!-- Cart -->
+        <div class="relative">
+          <button id="cart-btn" class="w-10 h-10 flex items-center justify-center relative">
+            <i class="ri-shopping-cart-line text-xl"></i>
+            <span id="cart-count" class="absolute -top-2 -right-2 bg-primary text-white text-xs rounded-full w-5 h-5 flex items-center justify-center cart-counter">0</span>
+          </button>
         </div>
-        <div class="p-6 border-t border-gray-200">
-            <div class="flex items-center justify-between mb-4">
-                <span class="text-lg font-semibold">Total:</span>
-                <span id="cart-total" class="text-xl font-bold text-primary">0,00 €</span>
-            </div>
-            <button id="checkout-whatsapp" class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 !rounded-button transition-colors whitespace-nowrap">
-                <i class="ri-whatsapp-line mr-2"></i>
-                Commander via WhatsApp
-            </button>
-        </div>
+      </div>
     </div>
+  </header>
 
-    <!-- Mobile Menu -->
-    <div id="mobile-menu" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden">
-        <div class="fixed left-0 top-0 h-full w-64 bg-white transform -translate-x-full transition-transform duration-300">
-            <div class="p-6 border-b border-gray-200">
-                <div class="flex items-center justify-between">
-                    <h3 class="font-['Pacifico'] text-xl">Taarou Sénégal</h3>
-                    <button id="close-mobile-menu" class="w-8 h-8 flex items-center justify-center">
-                        <i class="ri-close-line text-xl"></i>
-                    </button>
-                </div>
+  <!-- Main Content -->
+  <main class="pt-16 min-h-screen bg-dynamic">
+
+    <!-- Product Display -->
+    <section class="py-12">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+          
+          <!-- 3D Product Viewer -->
+          <div class="relative">
+            <div class="product-3d rounded-3xl p-8 min-h-[600px] flex items-center justify-center relative overflow-hidden">
+              <!-- Navigation Arrows -->
+              <button id="prev-btn" class="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/80 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-colors z-10">
+                <i class="ri-arrow-left-line text-xl"></i>
+              </button>
+              <button id="next-btn" class="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/80 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-colors z-10">
+                <i class="ri-arrow-right-line text-xl"></i>
+              </button>
+
+              <!-- Product Image -->
+              <div class="relative">
+                <img id="product-image" src="taar1.jpg" alt="T-shirt Taarou Sénégal" class="max-h-[500px] object-contain mx-auto">
+              </div>
             </div>
-            <nav class="p-6 space-y-4">
-                <a href="#" class="block text-gray-700 hover:text-primary transition-colors">Accueil</a>
-                <a href="#" class="block text-gray-700 hover:text-primary transition-colors">Collections</a>
-                <a href="#" class="block text-gray-700 hover:text-primary transition-colors">À propos</a>
-                <a href="#" class="block text-gray-700 hover:text-primary transition-colors">Contact</a>
-            </nav>
+
+            <!-- Product Indicators -->
+            <div class="flex justify-center mt-6 gap-2" id="indicator-container"></div>
+
+            <div class="text-center mt-4">
+              <span class="text-sm text-gray-600" id="image-index">1 / 5</span>
+            </div>
+          </div>
+
+          <!-- Product Info -->
+          <div class="space-y-8">
+            <div>
+              <h2 id="product-name" class="text-4xl font-bold text-gray-900 mb-4">T-shirt Dakar Premium</h2>
+              <p id="product-price" class="text-3xl font-bold text-primary mb-6">25€</p>
+              <p id="product-description" class="text-gray-600 leading-relaxed">
+                T-shirt en coton bio de qualité supérieure, inspiré des couleurs vibrantes du Sénégal.
+              </p>
+            </div>
+
+            <!-- Size Selection -->
+            <div>
+              <h3 class="text-lg font-semibold text-gray-900 mb-4">Taille</h3>
+              <div class="flex gap-3">
+                <input type="radio" id="size-s-product" name="product-size" value="S" class="sr-only size-selector">
+                <label for="size-s-product" class="w-12 h-12 border-2 border-gray-300 rounded-button flex items-center justify-center cursor-pointer hover:border-primary transition-colors">S</label>
+                <input type="radio" id="size-m-product" name="product-size" value="M" class="sr-only size-selector" checked>
+                <label for="size-m-product" class="w-12 h-12 border-2 border-gray-300 rounded-button flex items-center justify-center cursor-pointer hover:border-primary transition-colors">M</label>
+                <input type="radio" id="size-l-product" name="product-size" value="L" class="sr-only size-selector">
+                <label for="size-l-product" class="w-12 h-12 border-2 border-gray-300 rounded-button flex items-center justify-center cursor-pointer hover:border-primary transition-colors">L</label>
+                <input type="radio" id="size-xl-product" name="product-size" value="XL" class="sr-only size-selector">
+                <label for="size-xl-product" class="w-12 h-12 border-2 border-gray-300 rounded-button flex items-center justify-center cursor-pointer hover:border-primary transition-colors">XL</label>
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="space-y-4">
+              <button id="add-to-cart" class="w-full bg-primary hover:bg-secondary text-white font-semibold py-4 px-8 !rounded-button transition-colors whitespace-nowrap">
+                <i class="ri-shopping-cart-line mr-2"></i> Ajouter au panier
+              </button>
+              <button id="whatsapp-order" class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-4 px-8 !rounded-button transition-colors whitespace-nowrap">
+                <i class="ri-whatsapp-line mr-2"></i> Commander via WhatsApp
+              </button>
+            </div>
+          </div>
         </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Cart Sidebar -->
+  <div id="cart-sidebar" class="fixed right-0 top-0 h-full w-96 bg-white shadow-2xl transform translate-x-full transition-transform duration-300 z-50">
+    <div class="p-6 border-b border-gray-200">
+      <div class="flex items-center justify-between">
+        <h3 class="text-xl font-semibold">Panier</h3>
+        <button id="close-cart" class="w-8 h-8 flex items-center justify-center">
+          <i class="ri-close-line text-xl"></i>
+        </button>
+      </div>
     </div>
+    <div id="cart-items" class="flex-1 overflow-y-auto p-6">
+      <p class="text-gray-500 text-center">Votre panier est vide</p>
+    </div>
+    <div class="p-6 border-t border-gray-200">
+      <div class="flex items-center justify-between mb-4">
+        <span class="text-lg font-semibold">Total:</span>
+        <span id="cart-total" class="text-xl font-bold text-primary">0,00 €</span>
+      </div>
+      <button id="checkout-whatsapp" class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 !rounded-button transition-colors whitespace-nowrap">
+        <i class="ri-whatsapp-line mr-2"></i> Commander via WhatsApp
+      </button>
+    </div>
+  </div>
 
-    <script id="product-data">
-        const products = [
-            {
-                id: 1,
-                name: "Tarrou Senegal",
-                price: 25.00,
-                description: "T-shirt de qualité supérieure, inspiré des couleurs vibrantes du Sénégal. Coupe moderne et confortable, parfait pour un style décontracté et authentique.",
-                image: "taar1.jpg",
-                colors: ["blue", "red", "green", "yellow"],
-                sizes: ["S", "M", "L", "XL"]
-            },
-            {
-                id: 3,
-                name: "Tarrou Senegal",
-                price: 25.00,
-                description: "T-shirt de qualité supérieure, inspiré des couleurs vibrantes du Sénégal. Coupe moderne et confortable, parfait pour un style décontracté et authentique.",
-                image: "taar5.jpg",
-                colors: ["green", "brown", "beige", "white"],
-                sizes: ["S", "M", "L", "XL"]
-            },
-            {
-                id: 4,
-                name: "Tarrou Senegal",
-                price: 25.00,
-                description: "T-shirt de qualité supérieure, inspiré des couleurs vibrantes du Sénégal. Coupe moderne et confortable, parfait pour un style décontracté et authentique.",
-                image: "taar3.jpg",
-                colors: ["navy", "burgundy", "gold", "white"],
-                sizes: ["S", "M", "L", "XL"]
-            },
-            {
-                id: 5,
-                name: "Tarrou Senegal",
-                price: 25.00,
-                description: "T-shirt de qualité supérieure, inspiré des couleurs vibrantes du Sénégal. Coupe moderne et confortable, parfait pour un style décontracté et authentique.",
-                image: "taar6.jpg",
-                colors: ["orange", "red", "yellow", "green"],
-                sizes: ["S", "M", "L", "XL"]
-            }
-            {
-                id: 6,
-                name: "Tarrou Senegal",
-                price: 45.00,
-                description: "Veste de qualité supérieure, inspiré des couleurs vibrantes du Sénégal. Coupe moderne et confortable, parfait pour un style décontracté et authentique.",
-                image: "taarv1.jpg",
-                colors: ["blue", "red", "green", "yellow"],
-                sizes: ["S", "M", "L", "XL"]
-            },
-            {
-                id: 7,
-                name: "Tarrou Senegal",
-                price: 45.00,
-                description: "Veste de qualité supérieure, inspiré des couleurs vibrantes du Sénégal. Coupe moderne et confortable, parfait pour un style décontracté et authentique.",
-                image: "taarv2.jpg",
-                colors: ["green", "brown", "beige", "white"],
-                sizes: ["S", "M", "L", "XL"]
-            },
-            {
-                id: 8,
-                name: "Tarrou Senegal",
-                price: 45.00,
-                description: "Veste de qualité supérieure, inspiré des couleurs vibrantes du Sénégal. Coupe moderne et confortable, parfait pour un style décontracté et authentique.",
-                image: "taarv3.jpg",
-                colors: ["navy", "burgundy", "gold", "white"],
-                sizes: ["S", "M", "L", "XL"]
-            },
-            {
-                id: 9,
-                name: "Tarrou Senegal",
-                price: 45.00,
-                description: "Veste de qualité supérieure, inspiré des couleurs vibrantes du Sénégal. Coupe moderne et confortable, parfait pour un style décontracté et authentique.",
-                image: "taarv4.jpg",
-                colors: ["orange", "red", "yellow", "green"],
-                sizes: ["S", "M", "L", "XL"]
-            }
-            {
-                id: 10,
-                name: "Tarrou Senegal",
-                price: 45.00,
-                description: "Veste de qualité supérieure, inspiré des couleurs vibrantes du Sénégal. Coupe moderne et confortable, parfait pour un style décontracté et authentique.",
-                image: "taarv5.jpg",
-                colors: ["orange", "red", "yellow", "green"],
-                sizes: ["S", "M", "L", "XL"]
-            }
-        ];
-        let currentProductIndex = 0;
-        let cart = [];
-    </script>
+  <!-- Product Data -->
+  <script type="text/javascript">
+    const products = [
+      { id: 1, name: "Taarou Sénégal", price: 25.00, image: "taar1.jpg" },
+      { id: 2, name: "Taarou Sénégal", price: 25.00, image: "taar5.jpg" },
+      { id: 3, name: "Taarou Sénégal", price: 25.00, image: "taar3.jpg" },
+      { id: 4, name: "Taarou Sénégal", price: 25.00, image: "taar6.jpg" },
+      { id: 5, name: "Taarou Sénégal", price: 45.00, image: "taarv1.jpg" },
+      { id: 6, name: "Taarou Sénégal", price: 45.00, image: "taarv2.jpg" },
+      { id: 7, name: "Taarou Sénégal", price: 45.00, image: "taarv3.jpg" },
+      { id: 8, name: "Taarou Sénégal", price: 45.00, image: "taarv4.jpg" },
+      { id: 9, name: "Taarou Sénégal", price: 45.00, image: "taarv5.jpg" }
+    ];
 
-    <script id="product-display">
-        function updateProductDisplay() {
-            const product = products[currentProductIndex];
-            
-            gsap.to("#product-image", {
-                opacity: 0,
-                scale: 0.8,
-                duration: 0.3,
-                onComplete: () => {
-                    document.getElementById('product-image').src = product.image;
-                    document.getElementById('product-name').textContent = product.name;
-                    document.getElementById('product-price').textContent = `${product.price.toFixed(2)} €`;
-                    document.getElementById('product-description').textContent = product.description;
-                    
-                    gsap.to("#product-image", {
-                        opacity: 1,
-                        scale: 1,
-                        duration: 0.5,
-                        ease: "back.out(1.7)"
-                    });
-                }
-            });
+    let currentProductIndex = 0;
+    let cart = [];
 
-            gsap.fromTo("#product-name", 
-                { y: 20, opacity: 0 },
-                { y: 0, opacity: 1, duration: 0.6, delay: 0.2 }
-            );
-            
-            gsap.fromTo("#product-price", 
-                { y: 20, opacity: 0 },
-                { y: 0, opacity: 1, duration: 0.6, delay: 0.3 }
-            );
-            
-            gsap.fromTo("#product-description", 
-                { y: 20, opacity: 0 },
-                { y: 0, opacity: 1, duration: 0.6, delay: 0.4 }
-            );
+    function updateProductDisplay() {
+      const product = products[currentProductIndex];
+      document.getElementById('product-image').src = product.image;
+      document.getElementById('product-name').textContent = product.name;
+      document.getElementById('product-price').textContent = ${product.price.toFixed(2)} €;
+      document.getElementById('image-index').textContent = ${currentProductIndex + 1} / ${products.length};
+    }
 
-            document.querySelectorAll('.indicator-dot').forEach((dot, index) => {
-                dot.classList.toggle('bg-primary', index === currentProductIndex);
-                dot.classList.toggle('bg-gray-300', index !== currentProductIndex);
-            });
-        }
+    function addToCart() {
+      const product = products[currentProductIndex];
+      const existing = cart.find(item => item.id === product.id);
+      if (existing) existing.quantity++;
+      else cart.push({ ...product, quantity: 1 });
+      updateCartDisplay();
+    }
 
-        document.getElementById('prev-btn').addEventListener('click', () => {
-            currentProductIndex = (currentProductIndex - 1 + products.length) % products.length;
-            updateProductDisplay();
-        });
+    function updateCartDisplay() {
+      const cartCount = document.getElementById('cart-count');
+      const cartItems = document.getElementById('cart-items');
+      const cartTotal = document.getElementById('cart-total');
+      const total = cart.reduce((sum, i) => sum + i.price * i.quantity, 0);
+      cartCount.textContent = cart.reduce((sum, i) => sum + i.quantity, 0);
+      cartTotal.textContent = ${total.toFixed(2)} €;
+      if (!cart.length) {
+        cartItems.innerHTML = <p class="text-gray-500 text-center">Votre panier est vide</p>;
+      } else {
+        cartItems.innerHTML = cart.map(item => `
+          <div class="flex items-center gap-4 p-4 border border-gray-200 rounded-lg mb-4">
+            <img src="${item.image}" class="w-16 h-16 object-cover rounded">
+            <div class="flex-1">
+              <h4 class="font-semibold text-sm">${item.name}</h4>
+              <p class="text-sm font-semibold text-primary">${item.price.toFixed(2)} € × ${item.quantity}</p>
+            </div>
+          </div>
+        `).join('');
+      }
+    }
 
-        document.getElementById('next-btn').addEventListener('click', () => {
-            currentProductIndex = (currentProductIndex + 1) % products.length;
-            updateProductDisplay();
-        });
+    document.getElementById('prev-btn').onclick = () => {
+      currentProductIndex = (currentProductIndex - 1 + products.length) % products.length;
+      updateProductDisplay();
+    };
+    document.getElementById('next-btn').onclick = () => {
+      currentProductIndex = (currentProductIndex + 1) % products.length;
+      updateProductDisplay();
+    };
+    document.getElementById('add-to-cart').onclick = addToCart;
 
-        document.querySelectorAll('.indicator-dot').forEach((dot, index) => {
-            dot.addEventListener('click', () => {
-                currentProductIndex = index;
-                updateProductDisplay();
-            });
-        });
-    </script>
+    document.getElementById('cart-btn').onclick = () => document.getElementById('cart-sidebar').classList.remove('translate-x-full');
+    document.getElementById('close-cart').onclick = () => document.getElementById('cart-sidebar').classList.add('translate-x-full');
 
-    <script id="cart-functionality">
-        function updateCartDisplay() {
-            const cartCount = document.getElementById('cart-count');
-            const cartItems = document.getElementById('cart-items');
-            const cartTotal = document.getElementById('cart-total');
-            
-            cartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
-            
-            if (cart.length === 0) {
-                cartItems.innerHTML = '<p class="text-gray-500 text-center">Votre panier est vide</p>';
-                cartTotal.textContent = '0,00 €';
-                return;
-            }
-            
-            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            cartTotal.textContent = `${total.toFixed(2)} €`;
-            
-            cartItems.innerHTML = cart.map(item => `
-                <div class="flex items-center gap-4 p-4 border border-gray-200 rounded-lg mb-4">
-                    <img src="${item.image}" alt="${item.name}" class="w-16 h-16 object-cover rounded">
-                    <div class="flex-1">
-                        <h4 class="font-semibold text-sm">${item.name}</h4>
-                        <p class="text-xs text-gray-600">Taille: ${item.size} | Couleur: ${item.color}</p>
-                        <p class="text-sm font-semibold text-primary">${item.price.toFixed(2)} €</p>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <button onclick="updateQuantity(${item.id}, '${item.size}', '${item.color}', -1)" class="w-6 h-6 bg-gray-200 rounded-full flex items-center justify-center">
-                            <i class="ri-subtract-line text-xs"></i>
-                        </button>
-                        <span class="text-sm font-semibold">${item.quantity}</span>
-                        <button onclick="updateQuantity(${item.id}, '${item.size}', '${item.color}', 1)" class="w-6 h-6 bg-primary text-white rounded-full flex items-center justify-center">
-                            <i class="ri-add-line text-xs"></i>
-                        </button>
-                    </div>
-                </div>
-            `).join('');
-        }
+    document.getElementById('whatsapp-order').onclick = () => {
+      addToCart();
+      const message = encodeURIComponent("Bonjour ! Je souhaite commander un produit Taarou Sénégal.");
+      window.open(https://wa.me/393517762883?text=${message}, '_blank');
+    };
 
-        function addToCart() {
-            const product = products[currentProductIndex];
-            const selectedSize = document.querySelector('input[name="product-size"]:checked')?.value || 'M';
-            const selectedColor = document.querySelector('input[name="product-color"]:checked')?.value || 'blue';
-            
-            const existingItem = cart.find(item => 
-                item.id === product.id && 
-                item.size === selectedSize && 
-                item.color === selectedColor
-            );
-            
-            if (existingItem) {
-                existingItem.quantity += 1;
-            } else {
-                cart.push({
-                    ...product,
-                    size: selectedSize,
-                    color: selectedColor,
-                    quantity: 1
-                });
-            }
-            
-            updateCartDisplay();
-            
-            gsap.to("#cart-count", {
-                scale: 1.5,
-                duration: 0.2,
-                yoyo: true,
-                repeat: 1
-            });
-        }
+    document.getElementById('checkout-whatsapp').onclick = () => {
+      const message = encodeURIComponent("Bonjour ! Je souhaite valider ma commande Taarou Sénégal.");
+      window.open(https://wa.me/393517762883?text=${message}, '_blank');
+    };
 
-        function updateQuantity(productId, size, color, change) {
-            const item = cart.find(item => 
-                item.id === productId && 
-                item.size === size && 
-                item.color === color
-            );
-            
-            if (item) {
-                item.quantity += change;
-                if (item.quantity <= 0) {
-                    cart = cart.filter(cartItem => cartItem !== item);
-                }
-                updateCartDisplay();
-            }
-        }
+    document.addEventListener('DOMContentLoaded', () => {
+      updateProductDisplay();
+      updateCartDisplay();
+    });
+  </script>
 
-        function generateWhatsAppMessage() {
-            if (cart.length === 0) return '';
-            
-            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            let message = "Bonjour ! Je souhaite commander :\n\n";
-            
-            cart.forEach(item => {
-                message += `• ${item.name}\n`;
-                message += `  Taille: ${item.size}\n`;
-                message += `  Quantité: ${item.quantity} | Prix: ${(item.price * item.quantity).toFixed(2)}€\n\n`;
-            });
-            
-            message += `Total: ${total.toFixed(2)}€\n\n`;
-            message += "Merci !";
-            
-            return encodeURIComponent(message);
-        }
-
-        document.getElementById('add-to-cart').addEventListener('click', addToCart);
-
-        document.getElementById('whatsapp-order').addEventListener('click', () => {
-            addToCart();
-            const message = generateWhatsAppMessage();
-            window.open(`https://wa.me/393517762883?text=${message}`, '_blank');
-        });
-
-        document.getElementById('checkout-whatsapp').addEventListener('click', () => {
-            const message = generateWhatsAppMessage();
-            if (message) {
-                window.open(`https://wa.me/393517762883?text=${message}`, '_blank');
-            }
-        });
-    </script>
-
-    <script id="ui-interactions">
-        document.getElementById('cart-btn').addEventListener('click', () => {
-            document.getElementById('cart-sidebar').classList.remove('translate-x-full');
-        });
-
-        document.getElementById('close-cart').addEventListener('click', () => {
-            document.getElementById('cart-sidebar').classList.add('translate-x-full');
-        });
-
-        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
-            const mobileMenu = document.getElementById('mobile-menu');
-            const menuPanel = mobileMenu.querySelector('div');
-            mobileMenu.classList.remove('hidden');
-            setTimeout(() => {
-                menuPanel.classList.remove('-translate-x-full');
-            }, 10);
-        });
-
-        document.getElementById('close-mobile-menu').addEventListener('click', () => {
-            const mobileMenu = document.getElementById('mobile-menu');
-            const menuPanel = mobileMenu.querySelector('div');
-            menuPanel.classList.add('-translate-x-full');
-            setTimeout(() => {
-                mobileMenu.classList.add('hidden');
-            }, 300);
-        });
-
-        document.getElementById('mobile-menu').addEventListener('click', (e) => {
-            if (e.target === e.currentTarget) {
-                document.getElementById('close-mobile-menu').click();
-            }
-        });
-    </script>
-
-    <script id="initialization">
-        document.addEventListener('DOMContentLoaded', () => {
-            updateProductDisplay();
-            updateCartDisplay();
-            
-            gsap.from(".floating-animation", {
-                y: 20,
-                duration: 2,
-                ease: "power2.inOut",
-                repeat: -1,
-                yoyo: true
-            });
-        });
-    </script>
 </body>
 </html>
-
