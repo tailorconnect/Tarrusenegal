@@ -63,17 +63,21 @@
     </style>
 </head>
 <body class="bg-white overflow-x-hidden">
+    <!-- Header -->
     <header class="fixed top-0 w-full bg-white/90 backdrop-blur-md z-50 border-b border-gray-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
+                <!-- Menu Mobile -->
                 <button id="mobile-menu-btn" class="lg:hidden w-8 h-8 flex items-center justify-center">
                     <i class="ri-menu-line text-xl"></i>
                 </button>
                 
+                <!-- Logo -->
                 <div class="flex-1 flex justify-center lg:justify-start">
                     <h1 class="font-['Pacifico'] text-2xl text-gray-900">Tarrou Sénégal</h1>
                 </div>
                 
+                <!-- Cart -->
                 <div class="relative">
                     <button id="cart-btn" class="w-10 h-10 flex items-center justify-center relative">
                         <i class="ri-shopping-cart-line text-xl"></i>
@@ -84,13 +88,17 @@
         </div>
     </header>
 
+    <!-- Main Content -->
     <main class="pt-16 min-h-screen bg-dynamic">
 
+        <!-- Product Display -->
         <section class="py-12">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <!-- 3D Product Viewer -->
                     <div class="relative">
                         <div class="product-3d rounded-3xl p-8 min-h-[600px] flex items-center justify-center relative overflow-hidden">
+                            <!-- Navigation Arrows -->
                             <button id="prev-btn" class="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/80 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-colors z-10">
                                 <i class="ri-arrow-left-line text-xl"></i>
                             </button>
@@ -98,9 +106,11 @@
                                 <i class="ri-arrow-right-line text-xl"></i>
                             </button>
                             
+                            <!-- Product Image -->
                             <div class="relative">
                                 <img id="product-image" src="taar1.jpg">
                                 
+                                <!-- Zoom Controls -->
                                 <div class="absolute top-4 right-4 flex flex-col gap-2">
                                     <button class="w-8 h-8 bg-white/80 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-colors">
                                         <i class="ri-zoom-in-line text-sm"></i>
@@ -112,6 +122,7 @@
                             </div>
                         </div>
                         
+                        <!-- Product Indicators -->
                         <div class="flex justify-center mt-6 gap-2">
                             <button class="w-3 h-3 bg-primary rounded-full indicator-dot active"></button>
                             <button class="w-3 h-3 bg-gray-300 rounded-full indicator-dot"></button>
@@ -125,6 +136,7 @@
                         </div>
                     </div>
                     
+                    <!-- Product Info -->
                     <div class="space-y-8">
                         <div>
                             <h2 id="product-name" class="text-4xl font-bold text-gray-900 mb-4">T-shirt Dakar Premium</h2>
@@ -132,6 +144,7 @@
                             <p id="product-description" class="text-gray-600 leading-relaxed">T-shirt en coton bio de qualité supérieure, inspiré des couleurs vibrantes du Sénégal. Coupe moderne et confortable, parfait pour un style décontracté et authentique.</p>
                         </div>
                         
+                        <!-- Size Selection -->
                         <div>
                             <h3 class="text-lg font-semibold text-gray-900 mb-4">Taille</h3>
                             <div class="flex gap-3">
@@ -146,6 +159,7 @@
                             </div>
                         </div>
                         
+                        <!-- Action Buttons -->
                         <div class="space-y-4">
                             <button id="add-to-cart" class="w-full bg-primary hover:bg-secondary text-white font-semibold py-4 px-8 !rounded-button transition-colors whitespace-nowrap">
                                 <i class="ri-shopping-cart-line mr-2"></i>
@@ -161,6 +175,7 @@
             </div>
         </section>
     </main>
+    <!-- Cart Sidebar -->
     <div id="cart-sidebar" class="fixed right-0 top-0 h-full w-96 bg-white shadow-2xl transform translate-x-full transition-transform duration-300 z-50">
         <div class="p-6 border-b border-gray-200">
             <div class="flex items-center justify-between">
@@ -185,6 +200,7 @@
         </div>
     </div>
 
+    <!-- Mobile Menu -->
     <div id="mobile-menu" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden">
         <div class="fixed left-0 top-0 h-full w-64 bg-white transform -translate-x-full transition-transform duration-300">
             <div class="p-6 border-b border-gray-200">
@@ -208,92 +224,83 @@
         const products = [
             {
                 id: 1,
-                name: "T-shirt Iconique Dakar",
+                name: "Tarrou Senegal",
                 price: 25.00,
-                description: "T-shirt en coton bio de qualité supérieure, inspiré des couleurs vibrantes du Sénégal. Coupe moderne et confortable, parfait pour un style décontracté et authentique.",
-                image: "taar1.jpg", // Remplacez par le nom de l'image réelle
+                description: "T-shirt de qualité supérieure, inspiré des couleurs vibrantes du Sénégal. Coupe moderne et confortable, parfait pour un style décontracté et authentique.",
+                image: "taar1.jpg",
                 colors: ["blue", "red", "green", "yellow"],
-                sizes: ["S", "M", "L", "XL"]
-            },
-            {
-                id: 2,
-                name: "T-shirt Baobab Vintage",
-                price: 28.00,
-                description: "T-shirt au look vintage avec un motif discret inspiré du Baobab. Coton doux et coupe légèrement ajustée.",
-                image: "taar2.jpg", // Remplacez par le nom de l'image réelle
-                colors: ["brown", "beige", "olive", "navy"],
                 sizes: ["S", "M", "L", "XL"]
             },
             {
                 id: 3,
-                name: "T-shirt Teranga Coast",
+                name: "Tarrou Senegal",
                 price: 25.00,
-                description: "T-shirt léger pour l'été, motif graphique 'Teranga Coast'. Respirant et agréable à porter.",
-                image: "taar5.jpg", // Remplacez par le nom de l'image réelle
-                colors: ["white", "cyan", "coral", "grey"],
+                description: "T-shirt de qualité supérieure, inspiré des couleurs vibrantes du Sénégal. Coupe moderne et confortable, parfait pour un style décontracté et authentique.",
+                image: "taar5.jpg",
+                colors: ["green", "brown", "beige", "white"],
                 sizes: ["S", "M", "L", "XL"]
             },
             {
                 id: 4,
-                name: "Casquette 'Étoile' Brodé",
-                price: 18.00,
-                description: "Casquette 100% coton avec une étoile brodée. Taille ajustable. Parfait pour compléter votre look.",
-                image: "cap1.jpg", // Remplacez par le nom de l'image réelle
-                colors: ["black", "white", "red", "gold"],
-                sizes: ["Unique"] // Taille unique pour les casquettes
+                name: "Tarrou Senegal",
+                price: 25.00,
+                description: "T-shirt de qualité supérieure, inspiré des couleurs vibrantes du Sénégal. Coupe moderne et confortable, parfait pour un style décontracté et authentique.",
+                image: "taar3.jpg",
+                colors: ["navy", "burgundy", "gold", "white"],
+                sizes: ["S", "M", "L", "XL"]
             },
             {
                 id: 5,
-                name: "Mug 'Le Lion' Cérémonie",
-                price: 12.00,
-                description: "Mug en céramique de haute qualité avec un motif de Lion. Idéal pour votre café ou thé du matin.",
-                image: "mug1.jpg", // Remplacez par le nom de l'image réelle
-                colors: ["white", "black"],
-                sizes: ["Unique"] // Taille unique pour les mugs
-            },
+                name: "Tarrou Senegal",
+                price: 25.00,
+                description: "T-shirt de qualité supérieure, inspiré des couleurs vibrantes du Sénégal. Coupe moderne et confortable, parfait pour un style décontracté et authentique.",
+                image: "taar6.jpg",
+                colors: ["orange", "red", "yellow", "green"],
+                sizes: ["S", "M", "L", "XL"]
+            }
             {
                 id: 6,
-                name: "T-shirt 'Sénégal 1960'",
-                price: 30.00,
-                description: "T-shirt premium commémorant l'année 1960, avec un design graphique exclusif. Coupe confortable.",
-                image: "taar6.jpg", // Remplacez par le nom de l'image réelle
-                colors: ["green", "yellow", "red", "black"],
-                sizes: ["S", "M", "L", "XL"]
-            },
-            {
-                id: 7,
-                name: "Sac Tote Bag 'Marché'",
-                price: 15.00,
-                description: "Tote bag en toile de coton réutilisable, très pratique pour les courses ou une sortie décontractée.",
-                image: "totebag1.jpg", // Remplacez par le nom de l'image réelle
-                colors: ["natural", "navy"],
-                sizes: ["Unique"] // Taille unique pour les sacs
-            },
-            {
-                id: 8,
-                name: "T-shirt 'Taarou' Basique",
-                price: 22.00,
-                description: "T-shirt unisexe basique avec le logo 'Taarou' minimaliste. Un essentiel de la garde-robe.",
-                image: "taar3.jpg", // Remplacez par le nom de l'image réelle
-                colors: ["navy", "burgundy", "white", "grey"],
-                sizes: ["S", "M", "L", "XL"]
-            },
-            {
-                id: 9,
-                name: "Veste Imprimé Bogolan",
+                name: "Tarrou Senegal",
                 price: 45.00,
-                description: "Veste légère avec des accents d'imprimé Bogolan. Idéal pour les soirées fraîches.",
-                image: "taarv1.jpg", // Remplacez par le nom de l'image réelle
+                description: "Veste de qualité supérieure, inspiré des couleurs vibrantes du Sénégal. Coupe moderne et confortable, parfait pour un style décontracté et authentique.",
+                image: "taarv1.jpg",
                 colors: ["blue", "red", "green", "yellow"],
                 sizes: ["S", "M", "L", "XL"]
             },
             {
-                id: 10,
-                name: "Veste Casual Noir",
+                id: 7,
+                name: "Tarrou Senegal",
                 price: 45.00,
-                description: "Veste de qualité supérieure, coupe moderne. Parfait pour un style décontracté et authentique.",
-                image: "taarv5.jpg", // Remplacez par le nom de l'image réelle
-                colors: ["black", "grey"],
+                description: "Veste de qualité supérieure, inspiré des couleurs vibrantes du Sénégal. Coupe moderne et confortable, parfait pour un style décontracté et authentique.",
+                image: "taarv2.jpg",
+                colors: ["green", "brown", "beige", "white"],
+                sizes: ["S", "M", "L", "XL"]
+            },
+            {
+                id: 8,
+                name: "Tarrou Senegal",
+                price: 45.00,
+                description: "Veste de qualité supérieure, inspiré des couleurs vibrantes du Sénégal. Coupe moderne et confortable, parfait pour un style décontracté et authentique.",
+                image: "taarv3.jpg",
+                colors: ["navy", "burgundy", "gold", "white"],
+                sizes: ["S", "M", "L", "XL"]
+            },
+            {
+                id: 9,
+                name: "Tarrou Senegal",
+                price: 45.00,
+                description: "Veste de qualité supérieure, inspiré des couleurs vibrantes du Sénégal. Coupe moderne et confortable, parfait pour un style décontracté et authentique.",
+                image: "taarv4.jpg",
+                colors: ["orange", "red", "yellow", "green"],
+                sizes: ["S", "M", "L", "XL"]
+            }
+            {
+                id: 10,
+                name: "Tarrou Senegal",
+                price: 45.00,
+                description: "Veste de qualité supérieure, inspiré des couleurs vibrantes du Sénégal. Coupe moderne et confortable, parfait pour un style décontracté et authentique.",
+                image: "taarv5.jpg",
+                colors: ["orange", "red", "yellow", "green"],
                 sizes: ["S", "M", "L", "XL"]
             }
         ];
@@ -339,22 +346,10 @@
                 { y: 0, opacity: 1, duration: 0.6, delay: 0.4 }
             );
 
-            // Mise à jour des indicateurs pour correspondre au nouveau nombre de produits (10)
-            const indicatorContainer = document.querySelector('.flex.justify-center.mt-6.gap-2');
-            indicatorContainer.innerHTML = '';
-            document.querySelector('.text-center span').textContent = ${currentProductIndex + 1} / ${products.length};
-
-            for (let i = 0; i < products.length; i++) {
-                const button = document.createElement('button');
-                button.classList.add('w-3', 'h-3', 'rounded-full', 'indicator-dot');
-                button.classList.toggle('bg-primary', i === currentProductIndex);
-                button.classList.toggle('bg-gray-300', i !== currentProductIndex);
-                button.addEventListener('click', () => {
-                    currentProductIndex = i;
-                    updateProductDisplay();
-                });
-                indicatorContainer.appendChild(button);
-            }
+            document.querySelectorAll('.indicator-dot').forEach((dot, index) => {
+                dot.classList.toggle('bg-primary', index === currentProductIndex);
+                dot.classList.toggle('bg-gray-300', index !== currentProductIndex);
+            });
         }
 
         document.getElementById('prev-btn').addEventListener('click', () => {
@@ -416,7 +411,7 @@
         function addToCart() {
             const product = products[currentProductIndex];
             const selectedSize = document.querySelector('input[name="product-size"]:checked')?.value || 'M';
-            const selectedColor = document.querySelector('input[name="product-color"]:checked')?.value || product.colors[0]; // Correction: Utiliser la première couleur si aucune n'est sélectionnée
+            const selectedColor = document.querySelector('input[name="product-color"]:checked')?.value || 'blue';
             
             const existingItem = cart.find(item => 
                 item.id === product.id && 
@@ -470,7 +465,6 @@
             cart.forEach(item => {
                 message += • ${item.name}\n;
                 message += `  Taille: ${item.size}\n`;
-                message += `  Couleur: ${item.color}\n`; // Ajout de la couleur dans le message
                 message += `  Quantité: ${item.quantity} | Prix: ${(item.price * item.quantity).toFixed(2)}€\n\n`;
             });
             
