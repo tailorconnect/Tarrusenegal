@@ -3,194 +3,165 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catalogue - Tarrou Sénégal</title>
+    <title>Tarrou Sénégal - Boutique de Vêtements</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
-    <style>
-        .cart-counter {
-            animation: pulse 0.3s ease-in-out;
-        }
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-            100% { transform: scale(1); }
-        }
-    </style>
 </head>
-<body class="bg-gray-50">
+<body class="bg-gray-100 font-sans">
 
-<!-- Header -->
-<header class="bg-white shadow sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-        <h1 class="text-2xl font-bold text-green-600">Tarrou Sénégal</h1>
-        <div class="relative">
-            <button id="cart-btn" class="relative">
-                <i class="ri-shopping-cart-line text-2xl"></i>
-                <span id="cart-count" class="absolute -top-2 -right-2 bg-green-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs cart-counter">0</span>
-            </button>
-        </div>
-    </div>
-</header>
-
-<!-- Main Products -->
-<main class="max-w-7xl mx-auto p-6">
-    <h2 class="text-3xl font-bold mb-6">Nos Produits</h2>
-    <div id="products-container" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
-</main>
-
-<!-- Cart Sidebar -->
-<div id="cart-sidebar" class="fixed right-0 top-0 h-full w-96 bg-white shadow-2xl transform translate-x-full transition-transform duration-300 z-50">
-    <div class="p-6 border-b border-gray-200 flex justify-between items-center">
-        <h3 class="text-xl font-semibold">Panier</h3>
-        <button id="close-cart" class="w-8 h-8 flex items-center justify-center">
-            <i class="ri-close-line text-xl"></i>
+    <!-- Header -->
+    <header class="bg-white shadow p-4 flex justify-between items-center">
+        <h1 class="text-2xl font-bold text-gray-800">Tarrou Sénégal</h1>
+        <button id="cart-button" class="relative bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+            Panier <span id="cart-count" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full px-2">0</span>
         </button>
-    </div>
-    <div id="cart-items" class="flex-1 overflow-y-auto p-6">
-        <p class="text-gray-500 text-center">Votre panier est vide</p>
-    </div>
-    <div class="p-6 border-t border-gray-200">
-        <div class="flex justify-between mb-4">
-            <span class="text-lg font-semibold">Total:</span>
-            <span id="cart-total" class="text-xl font-bold text-green-600">0,00 €</span>
+    </header>
+
+    <!-- Produits -->
+    <main class="p-6">
+        <div id="product-grid" class="grid grid-cols-2 md:grid-cols-3 gap-6"></div>
+    </main>
+
+    <!-- Panier Sidebar -->
+    <div id="cart-sidebar" class="fixed top-0 right-0 h-full w-80 bg-white shadow-lg transform translate-x-full transition-transform z-50">
+        <div class="p-4 flex justify-between items-center border-b">
+            <h2 class="text-xl font-bold">Votre Panier</h2>
+            <button id="close-cart" class="text-gray-600 hover:text-gray-800">&times;</button>
         </div>
-        <button id="checkout-whatsapp" class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors flex items-center justify-center">
-            <i class="ri-whatsapp-line mr-2"></i> Commander via WhatsApp
-        </button>
+        <div id="cart-items" class="p-4 space-y-4 overflow-y-auto h-[calc(100%-150px)]"></div>
+        <div class="p-4 border-t">
+            <p class="font-bold text-lg">Total : <span id="cart-total">0 €</span></p>
+            <button id="checkout-whatsapp" class="mt-2 w-full bg-green-500 text-white py-2 rounded hover:bg-green-600">Commander via WhatsApp</button>
+        </div>
     </div>
-</div>
 
-<script>
-// Produits
-const products = [
-    {id: 1, name: "T-shirt Dakar Premium", price: 25, image: "taar1.jpg"},
-    {id: 2, name: "T-shirt Baobab Spirit", price: 27, image: "taar2.jpg"},
-    {id: 3, name: "T-shirt Tarrou Heritage", price: 28, image: "taar3.jpg"},
-    {id: 4, name: "Veste Dakar Street", price: 45, image: "taarv1.jpg"},
-    {id: 5, name: "Veste Baobab Classic", price: 48, image: "taarv2.jpg"},
-    {id: 6, name: "Veste Heritage Gold", price: 50, image: "taarv3.jpg"},
-    {id: 7, name: "T-shirt Lion du Sénégal", price: 30, image: "taar4.jpg"},
-    {id: 8, name: "T-shirt Sable & Mer", price: 26, image: "taar5.jpg"},
-    {id: 9, name: "Veste Lion Power", price: 47, image: "taarv4.jpg"},
-    {id: 10, name: "Veste Sable Noir", price: 49, image: "taarv5.jpg"},
-];
+    <script>
+        // Tableau des produits
+        const products = [
+            {id:1, name:"T-shirt Classique", price:25, image:"https://via.placeholder.com/300x300?text=T-shirt+1"},
+            {id:2, name:"Chemise Élégante", price:40, image:"https://via.placeholder.com/300x300?text=Chemise+2"},
+            {id:3, name:"Pantalon Jean", price:35, image:"https://via.placeholder.com/300x300?text=Pantalon+3"},
+            {id:4, name:"Robe Casual", price:50, image:"https://via.placeholder.com/300x300?text=Robe+4"},
+            {id:5, name:"Short d'été", price:20, image:"https://via.placeholder.com/300x300?text=Short+5"},
+            {id:6, name:"Veste Chic", price:60, image:"https://via.placeholder.com/300x300?text=Veste+6"},
+            {id:7, name:"Pull Douillet", price:45, image:"https://via.placeholder.com/300x300?text=Pull+7"},
+            {id:8, name:"Tunique Traditionnelle", price:55, image:"https://via.placeholder.com/300x300?text=Tunique+8"},
+            {id:9, name:"Casquette", price:15, image:"https://via.placeholder.com/300x300?text=Casquette+9"},
+            {id:10, name:"Chaussures Sport", price:70, image:"https://via.placeholder.com/300x300?text=Chaussures+10"}
+        ];
 
-let cart = [];
+        const cart = {};
 
-// Affichage des produits
-const container = document.getElementById("products-container");
-products.forEach(product => {
-    const card = document.createElement("div");
-    card.className = "bg-white rounded-lg shadow p-4 flex flex-col";
-    card.innerHTML = `
-        <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover rounded mb-4">
-        <h3 class="text-lg font-semibold mb-2">${product.name}</h3>
-        <p class="text-green-600 font-bold mb-4">${product.price.toFixed(2)} €</p>
-        <div class="mt-auto flex flex-col gap-2">
-            <button class="bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded flex items-center justify-center add-to-cart" data-id="${product.id}">
-                <i class="ri-shopping-cart-line mr-2"></i> Ajouter au panier
-            </button>
-            <button class="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded flex items-center justify-center whatsapp-order" data-id="${product.id}">
-                <i class="ri-whatsapp-line mr-2"></i> Commander via WhatsApp
-            </button>
-        </div>
-    `;
-    container.appendChild(card);
-});
+        const productGrid = document.getElementById('product-grid');
+        const cartSidebar = document.getElementById('cart-sidebar');
+        const cartButton = document.getElementById('cart-button');
+        const closeCart = document.getElementById('close-cart');
+        const cartItems = document.getElementById('cart-items');
+        const cartTotal = document.getElementById('cart-total');
+        const cartCount = document.getElementById('cart-count');
+        const checkoutWhatsapp = document.getElementById('checkout-whatsapp');
 
-// Fonctions panier
-function updateCartDisplay() {
-    const cartCount = document.getElementById('cart-count');
-    const cartItems = document.getElementById('cart-items');
-    const cartTotal = document.getElementById('cart-total');
-    
-    cartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
-    
-    if (cart.length === 0) {
-        cartItems.innerHTML = '<p class="text-gray-500 text-center">Votre panier est vide</p>';
-        cartTotal.textContent = '0,00 €';
-        return;
-    }
-    
-    const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    cartTotal.textContent = ${total.toFixed(2)} €;
-    
-    cartItems.innerHTML = cart.map(item => `
-        <div class="flex items-center gap-4 p-4 border border-gray-200 rounded-lg mb-4">
-            <img src="${item.image}" alt="${item.name}" class="w-16 h-16 object-cover rounded">
-            <div class="flex-1">
-                <h4 class="font-semibold text-sm">${item.name}</h4>
-                <p class="text-sm font-bold text-green-600">${item.price.toFixed(2)} €</p>
-                <p class="text-xs text-gray-600">Quantité: ${item.quantity}</p>
-            </div>
-            <div class="flex flex-col gap-1">
-                <button onclick="updateQuantity(${item.id}, 1)" class="w-6 h-6 bg-green-600 text-white rounded flex items-center justify-center">
-                    <i class="ri-add-line text-xs"></i>
-                </button>
-                <button onclick="updateQuantity(${item.id}, -1)" class="w-6 h-6 bg-gray-200 rounded flex items-center justify-center">
-                    <i class="ri-subtract-line text-xs"></i>
-                </button>
-            </div>
-        </div>
-    `).join('');
-}
+        // Afficher les produits
+        function displayProducts() {
+            productGrid.innerHTML = '';
+            products.forEach(product => {
+                const card = document.createElement('div');
+                card.className = "bg-white shadow rounded p-4 flex flex-col items-center";
+                card.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}" class="mb-4 w-full h-48 object-cover rounded">
+                    <h3 class="font-bold text-lg mb-2">${product.name}</h3>
+                    <p class="text-gray-700 mb-4">${product.price} €</p>
+                    <div class="flex space-x-2">
+                        <button onclick="addToCart(${product.id})" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Ajouter au panier</button>
+                        <button onclick="orderWhatsApp(${product.id},1)" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">WhatsApp</button>
+                    </div>
+                `;
+                productGrid.appendChild(card);
+            });
+        }
 
-function addToCart(id) {
-    const product = products.find(p => p.id == id);
-    const existing = cart.find(item => item.id == id);
-    if(existing) existing.quantity++;
-    else cart.push({...product, quantity:1});
-    updateCartDisplay();
-}
+        // Ajouter au panier
+        function addToCart(id) {
+            if(cart[id]) cart[id]++;
+            else cart[id] = 1;
+            updateCart();
+        }
 
-function updateQuantity(id, change) {
-    const item = cart.find(item => item.id == id);
-    if(item) {
-        item.quantity += change;
-        if(item.quantity <=0) cart = cart.filter(i => i.id != id);
-        updateCartDisplay();
-    }
-}
+        // Mettre à jour le panier
+        function updateCart() {
+            cartItems.innerHTML = '';
+            let total = 0;
+            let count = 0;
+            for(let id in cart) {
+                const product = products.find(p => p.id == id);
+                const quantity = cart[id];
+                total += product.price * quantity;
+                count += quantity;
 
-function generateWhatsAppMessage() {
-    if(cart.length ===0) return '';
-    let message = "Bonjour ! Je souhaite commander :\n\n";
-    cart.forEach(item => {
-        message += • ${item.name} - ${item.price.toFixed(2)} € x ${item.quantity}\n;
-    });
-    const total = cart.reduce((sum, item) => sum + (item.price*item.quantity), 0);
-    message += \nTotal: ${total.toFixed(2)} €\nMerci !;
-    return encodeURIComponent(message);
-}
+                const item = document.createElement('div');
+                item.className = "flex items-center justify-between border-b pb-2";
+                item.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}" class="w-16 h-16 object-cover rounded">
+                    <div class="flex-1 ml-2">
+                        <h4 class="font-bold">${product.name}</h4>
+                        <p>${product.price} € x <span>${quantity}</span></p>
+                        <div class="flex space-x-1 mt-1">
+                            <button onclick="changeQuantity(${id}, -1)" class="bg-gray-300 px-2 rounded">-</button>
+                            <button onclick="changeQuantity(${id}, 1)" class="bg-gray-300 px-2 rounded">+</button>
+                        </div>
+                    </div>
+                `;
+                cartItems.appendChild(item);
+            }
+            cartTotal.textContent = total + " €";
+            cartCount.textContent = count;
+        }
 
-// Event listeners
-document.querySelectorAll(".add-to-cart").forEach(btn => {
-    btn.addEventListener("click", e => {
-        addToCart(e.currentTarget.dataset.id);
-    });
-});
+        // Modifier la quantité
+        function changeQuantity(id, delta) {
+            if(cart[id] + delta <= 0) delete cart[id];
+            else cart[id] += delta;
+            updateCart();
+        }
 
-document.querySelectorAll(".whatsapp-order").forEach(btn => {
-    btn.addEventListener("click", e => {
-        addToCart(e.currentTarget.dataset.id);
-        const msg = generateWhatsAppMessage();
-        window.open(https://wa.me/393517762883?text=${msg}, '_blank');
-    });
-});
+        // Commander via WhatsApp pour un produit spécifique
+        function orderWhatsApp(id, quantity) {
+            const product = products.find(p => p.id == id);
+            const message = Bonjour, je souhaite commander :\n${product.name} - ${product.price} € x ${quantity} = ${product.price*quantity} €;
+            const url = https://wa.me/221XXXXXXXX?text=${encodeURIComponent(message)};
+            window.open(url, '_blank');
+        }
 
-document.getElementById('checkout-whatsapp').addEventListener('click', () => {
-    const msg = generateWhatsAppMessage();
-    if(msg) window.open(https://wa.me/393517762883?text=${msg}, '_blank');
-});
+        // Commander tous les produits via WhatsApp
+        checkoutWhatsapp.addEventListener('click', () => {
+            if(Object.keys(cart).length === 0) {
+                alert("Votre panier est vide !");
+                return;
+            }
+            let message = "Bonjour, je souhaite commander :\n";
+            let total = 0;
+            for(let id in cart) {
+                const product = products.find(p => p.id == id);
+                const quantity = cart[id];
+                total += product.price * quantity;
+                message += ${product.name} - ${product.price} € x ${quantity} = ${product.price*quantity} €\n;
+            }
+            message += Total : ${total} €;
+            const url = https://wa.me/221XXXXXXXX?text=${encodeURIComponent(message)};
+            window.open(url, '_blank');
+        });
 
-document.getElementById('cart-btn').addEventListener('click', () => {
-    document.getElementById('cart-sidebar').classList.remove('translate-x-full');
-});
+        // Afficher / cacher le panier
+        cartButton.addEventListener('click', () => {
+            cartSidebar.classList.remove('translate-x-full');
+        });
+        closeCart.addEventListener('click', () => {
+            cartSidebar.classList.add('translate-x-full');
+        });
 
-document.getElementById('close-cart').addEventListener('click', () => {
-    document.getElementById('cart-sidebar').classList.add('translate-x-full');
-});
-</script>
+        // Initialisation
+        displayProducts();
+        updateCart();
+    </script>
 
 </body>
 </html>
