@@ -3,167 +3,522 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tarrou Sénégal - Boutique de Vêtements</title>
+    <title>Tarru Senegal</title>
     <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-100 font-sans">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f9f5f0;
+        }
+        
+        .title-font {
+            font-family: 'Playfair Display', serif;
+        }
 
+        .bg-primary {
+            background-color: #f5f5f5; /* Fond clair */
+        }
+
+        .text-primary {
+            color: #800020; /* Bordeaux */
+        }
+
+        .border-primary {
+            border-color: #800020; /* Bordeaux */
+        }
+
+        .bg-gold {
+            background-color: #D4AF37; /* Or */
+        }
+
+        .text-gold {
+            color: #D4AF37; /* Or */
+        }
+        
+        .hero-pattern {
+            background-image: url('https://i.pinimg.com/originals/7a/3b/6f/7a3b6f8d9a3b8f3b3e3b8f3b3e3b8f3b.jpg');
+            background-size: cover;
+            background-position: center;
+            background-blend-mode: overlay;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .cart-item-enter {
+            animation: slideIn 0.3s forwards;
+        }
+        
+        .cart-item-exit {
+            animation: slideOut 0.3s forwards;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        @keyframes slideOut {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+        
+        .african-pattern {
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCI+PHBhdGggZmlsbD0iI2U1YzVhZSIgZD0iTTAgMGgxMDB2MTAwaC0xMDB6Ii8+PHBhdGggZmlsbD0iI2Q0YjliMCIgZD0iTTAgMGg1MHY1MGgtNTB6Ii8+PHBhdGggZmlsbD0iI2Q0YjliMCIgZD0iTTUwIDUwaDUwdjUwaC01MHoiLz48L3N2Zz4=');
+            opacity: 0.1;
+        }
+    </style>
+</head>
+<body class="relative">
     <!-- Header -->
-    <header class="bg-white shadow p-4 flex justify-between items-center">
-        <h1 class="text-2xl font-bold text-gray-800">Tarrou Sénégal</h1>
-        <button id="cart-button" class="relative bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
-            Panier <span id="cart-count" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full px-2">0</span>
-        </button>
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <h1 class="title-font text-2xl font-bold text-primary">Tarru Senegal</h1>
+            </div>
+            
+            <nav class="hidden md:flex space-x-8">
+                <a href="#collection" class="text-primary hover:text-gold font-medium">Collection</a>
+            </nav>
+            
+            <div class="flex items-center space-x-4">
+                <button id="cart-btn" class="relative">
+                    <i class="fas fa-shopping-bag text-amber-800 text-xl"></i>
+                    <span id="cart-count" class="absolute -top-2 -right-2 bg-amber-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center hidden">0</span>
+                </button>
+                <button class="md:hidden" id="menu-btn">
+                    <i class="fas fa-bars text-amber-800 text-xl"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white py-4 px-4 shadow-lg">
+            <a href="#collection" class="block py-2 text-amber-900 hover:text-amber-600">Collection</a>
+        </div>
     </header>
 
-    <!-- Produits -->
-    <main class="p-6">
-        <div id="product-grid" class="grid grid-cols-2 md:grid-cols-3 gap-6"></div>
-    </main>
-
-    <!-- Panier Sidebar -->
-    <div id="cart-sidebar" class="fixed top-0 right-0 h-full w-80 bg-white shadow-lg transform translate-x-full transition-transform z-50 overflow-y-auto">
-        <div class="p-4 flex justify-between items-center border-b">
-            <h2 class="text-xl font-bold">Votre Panier</h2>
-            <button id="close-cart" class="text-gray-600 text-2xl font-bold hover:text-gray-800">&times;</button>
+    <!-- Hero Section -->
+    <section id="accueil" class="hero-pattern bg-primary relative overflow-hidden">
+        <div class="african-pattern absolute inset-0"></div>
+        <div class="container mx-auto px-4 py-20 md:py-32 relative z-10">
+            <div class="max-w-2xl">
+                <h2 class="title-font text-4xl md:text-6xl font-bold text-primary mb-4">Élégance Sénégalaise Contemporaine</h2>
+                <p class="text-primary text-lg md:text-xl mb-8">Découvrez notre collection exclusive alliant tradition et modernité.</p>
+                <a href="#collection" class="bg-[#800020] hover:bg-opacity-90 text-white font-medium py-3 px-8 rounded-full inline-block transition duration-300 transform hover:scale-105 border-2 border-white">Voir la collection</a>
+            </div>
         </div>
-        <div id="cart-items" class="p-4 space-y-4"></div>
-        <div class="p-4 border-t">
-            <p class="font-bold text-lg">Total : <span id="cart-total">0 €</span></p>
-            <button id="checkout-whatsapp" class="mt-2 w-full bg-green-500 text-white py-2 rounded hover:bg-green-600">Commander via WhatsApp</button>
-        </div>
-    </div>
+    </section>
 
-    <script>
-        // Produits
-        const products = [
-            {id:1, name:"T-shirt Classique", price:25, image:"https://via.placeholder.com/300x300?text=T-shirt+1"},
-            {id:2, name:"Chemise Élégante", price:40, image:"https://via.placeholder.com/300x300?text=Chemise+2"},
-            {id:3, name:"Pantalon Jean", price:35, image:"https://via.placeholder.com/300x300?text=Pantalon+3"},
-            {id:4, name:"Robe Casual", price:50, image:"https://via.placeholder.com/300x300?text=Robe+4"},
-            {id:5, name:"Short d'été", price:20, image:"https://via.placeholder.com/300x300?text=Short+5"},
-            {id:6, name:"Veste Chic", price:60, image:"https://via.placeholder.com/300x300?text=Veste+6"},
-            {id:7, name:"Pull Douillet", price:45, image:"https://via.placeholder.com/300x300?text=Pull+7"},
-            {id:8, name:"Tunique Traditionnelle", price:55, image:"https://via.placeholder.com/300x300?text=Tunique+8"},
-            {id:9, name:"Casquette", price:15, image:"https://via.placeholder.com/300x300?text=Casquette+9"},
-            {id:10, name:"Chaussures Sport", price:70, image:"https://via.placeholder.com/300x300?text=Chaussures+10"}
-        ];
-
-        const cart = {};
-
-        const productGrid = document.getElementById('product-grid');
-        const cartSidebar = document.getElementById('cart-sidebar');
-        const cartButton = document.getElementById('cart-button');
-        const closeCart = document.getElementById('close-cart');
-        const cartItems = document.getElementById('cart-items');
-        const cartTotal = document.getElementById('cart-total');
-        const cartCount = document.getElementById('cart-count');
-        const checkoutWhatsapp = document.getElementById('checkout-whatsapp');
-
-        // Afficher produits
-        function displayProducts() {
-            productGrid.innerHTML = '';
-            products.forEach(product => {
-                const card = document.createElement('div');
-                card.className = "bg-white shadow rounded p-4 flex flex-col items-center";
-                card.innerHTML = `
-                    <img src="${product.image}" alt="${product.name}" class="mb-4 w-full h-48 object-cover rounded">
-                    <h3 class="font-bold text-lg mb-2 text-center">${product.name}</h3>
-                    <p class="text-gray-700 mb-4">${product.price} €</p>
-                    <div class="flex flex-col space-y-2 w-full">
-                        <button onclick="addToCart(${product.id})" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full">Ajouter au panier</button>
-                        <button onclick="orderWhatsApp(${product.id},1)" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 w-full">Commander via WhatsApp</button>
-                    </div>
-                `;
-                productGrid.appendChild(card);
-            });
-        }
-
-        // Ajouter au panier
-        function addToCart(id) {
-            if(cart[id]) cart[id]++;
-            else cart[id] = 1;
-            updateCart();
-        }
-
-        // Modifier quantité
-        function changeQuantity(id, delta) {
-            if(cart[id] + delta <= 0) delete cart[id];
-            else cart[id] += delta;
-            updateCart();
-        }
-
-        // Mettre à jour le panier
-        function updateCart() {
-            cartItems.innerHTML = '';
-            let total = 0;
-            let count = 0;
-            for(let id in cart) {
-                const product = products.find(p => p.id == id);
-                const quantity = cart[id];
-                total += product.price * quantity;
-                count += quantity;
-
-                const item = document.createElement('div');
-                item.className = "flex items-center justify-between border-b pb-2";
-                item.innerHTML = `
-                    <img src="${product.image}" alt="${product.name}" class="w-16 h-16 object-cover rounded">
-                    <div class="flex-1 ml-2">
-                        <h4 class="font-bold">${product.name}</h4>
-                        <p>${product.price} € x <span>${quantity}</span></p>
-                        <div class="flex space-x-1 mt-1">
-                            <button onclick="changeQuantity(${id}, -1)" class="bg-gray-300 px-2 rounded">-</button>
-                            <button onclick="changeQuantity(${id}, 1)" class="bg-gray-300 px-2 rounded">+</button>
+    <!-- Collection Section -->
+    <section id="collection" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="title-font text-3xl md:text-4xl font-bold text-primary mb-4">Notre Collection</h2>
+                <div class="w-20 h-1 bg-gold mx-auto"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                <!-- Product 1 -->
+                <div class="product-card bg-white rounded-lg overflow-hidden shadow-md transition duration-300">
+                    <div class="relative overflow-hidden h-64">
+                        <img src="taar1.jpg" alt="Adire" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center opacity-0 hover:opacity-100 transition duration-300">
+                            <button class="add-to-cart bg-gold hover:bg-opacity-90 text-primary py-2 px-6 rounded-full font-medium border-2 border-primary" data-id="1" data-name="t-shirt" data-price="25" data-img="Adire">Ajouter au panier</button>
                         </div>
                     </div>
-                `;
-                cartItems.appendChild(item);
-            }
-            cartTotal.textContent = total + " €";
-            cartCount.textContent = count;
-        }
+                    <div class="p-4">
+                        <h3 class="font-semibold text-lg text-black mb-1">Tarru senegal</h3>
+                        <p class="text-gray-700 text-sm mb-2">Senegal</p>
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-black">25€</span>
+                            <div class="flex space-x-1">
+                                <span class="w-3 h-3 rounded-full bg-amber-500"></span>
+                                <span class="w-3 h-3 rounded-full bg-red-500"></span>
+                                <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 2 -->
+                <div class="product-card bg-white rounded-lg overflow-hidden shadow-md transition duration-300">
+                    <div class="relative overflow-hidden h-64">
+                        <img src="taar2.jpg" alt="Boubou" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center opacity-0 hover:opacity-100 transition duration-300">
+                            <button class="add-to-cart bg-amber-600 text-white py-2 px-6 rounded-full font-medium" data-id="2" data-name="t-shirt1" data-price="25" data-img="articlen2">Ajouter au panier</button>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold text-lg text-amber-900 mb-1">Tarru Senegal</h3>
+                        <p class="text-gray-600 text-sm mb-2">t-shirt</p>
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-amber-800">25€</span>
+                            <div class="flex space-x-1">
+                                <span class="w-3 h-3 rounded-full bg-white border border-gray-300"></span>
+                                <span class="w-3 h-3 rounded-full bg-green-500"></span>
+                                <span class="w-3 h-3 rounded-full bg-purple-500"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 3 -->
+                <div class="product-card bg-white rounded-lg overflow-hidden shadow-md transition duration-300">
+                    <div class="relative overflow-hidden h-64">
+                        <img src="taar3.jpg" alt="Jupe Pagne" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center opacity-0 hover:opacity-100 transition duration-300">
+                            <button class="add-to-cart bg-amber-600 text-white py-2 px-6 rounded-full font-medium" data-id="3" data-name="t-shirt" data-price="25" data-img="articlen3">Ajouter au panier</button>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold text-lg text-amber-900 mb-1">Tarru Senegal</h3>
+                        <p class="text-gray-600 text-sm mb-2">t-shirt</p>
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-amber-800">25€</span>
+                            <div class="flex space-x-1">
+                                <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
+                                <span class="w-3 h-3 rounded-full bg-red-500"></span>
+                                <span class="w-3 h-3 rounded-full bg-black"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 4 -->
+                <div class="product-card bg-white rounded-lg overflow-hidden shadow-md transition duration-300">
+                    <div class="relative overflow-hidden h-64">
+                        <img src="taarv1.jpg" alt="Top Moderne" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center opacity-0 hover:opacity-100 transition duration-300">
+                            <button class="add-to-cart bg-amber-600 text-white py-2 px-6 rounded-full font-medium" data-id="4" data-name="veste" data-price="40" data-img="jeyna">Ajouter au panier</button>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold text-lg text-amber-900 mb-1">Tarru senegal</h3>
+                        <p class="text-gray-600 text-sm mb-2">Veste</p>
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-amber-800">40€</span>
+                            <div class="flex space-x-1">
+                                <span class="w-3 h-3 rounded-full bg-blue-500"></span>
+                                <span class="w-3 h-3 rounded-full bg-pink-500"></span>
+                                <span class="w-3 h-3 rounded-full bg-white border border-gray-300"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 5 -->
+                <div class="product-card bg-white rounded-lg overflow-hidden shadow-md transition duration-300">
+                    <div class="relative overflow-hidden h-64">
+                        <img src="taarv2.jpg" alt="Grand boubou" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center opacity-0 hover:opacity-100 transition duration-300">
+                            <button class="add-to-cart bg-amber-600 text-white py-2 px-6 rounded-full font-medium" data-id="5" data-name="Veste" data-price="40" data-img="kouassi">Ajouter au panier</button>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold text-lg text-amber-900 mb-1">Tarru Senegal</h3>
+                        <p class="text-gray-600 text-sm mb-2">Veste</p>
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-amber-800">40€</span>
+                            <div class="flex space-x-1">
+                                <span class="w-3 h-3 rounded-full bg-red-500"></span>
+                                <span class="w-3 h-3 rounded-full bg-blue-500"></span>
+                                <span class="w-3 h-3 rounded-full bg-green-500"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 6 -->
+                <div class="product-card bg-white rounded-lg overflow-hidden shadow-md transition duration-300">
+                    <div class="relative overflow-hidden h-64">
+                        <img src="taarv4.jpg" alt="oumaisha" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center opacity-0 hover:opacity-100 transition duration-300">
+                            <button class="add-to-cart bg-amber-600 text-white py-2 px-6 rounded-full font-medium" data-id="6" data-name="Veste" data-price="20" data-img="oumaisha">Ajouter au panier</button>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold text-lg text-amber-900 mb-1">Tarru senegal</h3>
+                        <p class="text-gray-600 text-sm mb-2">Veste</p>
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-amber-800">40€</span>
+                            <div class="flex space-x-1">
+                                <span class="w-3 h-3 rounded-full bg-black"></span>
+                                <span class="w-3 h-3 rounded-full bg-gold-500"></span>
+                                <span class="w-3 h-3 rounded-full bg-purple-500"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+     </section>
+            
 
-        // Commander via WhatsApp produit unique
-        function orderWhatsApp(id, quantity) {
-            const product = products.find(p => p.id == id);
-            const message = Bonjour, je souhaite commander :\n${product.name} - ${product.price} € x ${quantity} = ${product.price*quantity} €;
-            const url = https://wa.me/2213517762883?text=${encodeURIComponent(message)};
-            window.open(url, '_blank');
-        }
+    <!-- Shopping Cart Sidebar -->
+    <div id="cart-sidebar" class="fixed top-0 right-0 w-full sm:w-96 h-full bg-white shadow-xl z-50 transform translate-x-full transition-transform duration-300 ease-in-out overflow-y-auto">
+        <div class="p-6">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="title-font text-2xl font-bold text-amber-900">Votre Panier</h3>
+                <button id="close-cart" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <div id="cart-items" class="space-y-4 mb-6">
+                <!-- Cart items will be added here dynamically -->
+                <div class="text-center py-8 text-gray-500" id="empty-cart-message">
+                    <i class="fas fa-shopping-bag text-4xl mb-4 text-amber-200"></i>
+                    <p>Votre panier est vide</p>
+                </div>
+            </div>
+            
+            <div id="cart-summary" class="border-t border-gray-200 pt-4 hidden">
+                <div class="flex justify-between mb-2">
+                    <span class="font-medium text-gray-700">Sous-total</span>
+                    <span id="cart-subtotal" class="font-medium">0 FCFA</span>
+                </div>
+                <div class="flex justify-between mb-4">
+                    <span class="font-medium text-gray-700">Livraison</span>
+                    <span class="font-medium">À calculer</span>
+                </div>
+                <div class="flex justify-between text-lg font-bold text-amber-900 mb-6">
+                    <span>Total</span>
+                    <span id="cart-total">0 FCFA</span>
+                </div>
+                
+                <button id="checkout-btn" class="w-full bg-[#800020] hover:bg-opacity-90 text-white font-medium py-3 px-6 rounded-full transition duration-300 flex items-center justify-center border-2 border-white">
+                    <i class="fab fa-whatsapp mr-2"></i> Commander via WhatsApp
+                </button>
+                
+                <p class="text-center text-sm text-gray-500 mt-4">Vous serez redirigé vers WhatsApp pour finaliser votre commande</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Cart Overlay -->
+    <div id="cart-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden"></div>
 
-        // Commander tout via WhatsApp
-        checkoutWhatsapp.addEventListener('click', () => {
-            if(Object.keys(cart).length === 0) {
-                alert("Votre panier est vide !");
-                return;
-            }
-            let message = "Bonjour, je souhaite commander :\n";
-            let total = 0;
-            for(let id in cart) {
-                const product = products.find(p => p.id == id);
-                const quantity = cart[id];
-                total += product.price * quantity;
-                message += ${product.name} - ${product.price} € x ${quantity} = ${product.price*quantity} €\n;
-            }
-            message += Total : ${total} €;
-            const url = https://wa.me/2213517762883?text=${encodeURIComponent(message)};
-            window.open(url, '_blank');
+    <script>
+        // Mobile menu toggle
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
         });
-
-        // Ouvrir / fermer panier
-        cartButton.addEventListener('click', () => {
+        
+        // Cart functionality
+        const cartBtn = document.getElementById('cart-btn');
+        const closeCartBtn = document.getElementById('close-cart');
+        const cartSidebar = document.getElementById('cart-sidebar');
+        const cartOverlay = document.getElementById('cart-overlay');
+        const cartCount = document.getElementById('cart-count');
+        const cartItemsContainer = document.getElementById('cart-items');
+        const emptyCartMessage = document.getElementById('empty-cart-message');
+        const cartSummary = document.getElementById('cart-summary');
+        const checkoutBtn = document.getElementById('checkout-btn');
+        
+        let cart = [];
+        
+        // Toggle cart sidebar
+        cartBtn.addEventListener('click', () => {
             cartSidebar.classList.remove('translate-x-full');
+            cartOverlay.classList.remove('hidden');
             document.body.style.overflow = 'hidden';
         });
-        closeCart.addEventListener('click', () => {
+        
+        closeCartBtn.addEventListener('click', () => {
             cartSidebar.classList.add('translate-x-full');
+            cartOverlay.classList.add('hidden');
             document.body.style.overflow = 'auto';
         });
-
-        // Initialisation
-        displayProducts();
-        updateCart();
+        
+        cartOverlay.addEventListener('click', () => {
+            cartSidebar.classList.add('translate-x-full');
+            cartOverlay.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        });
+        
+        // Add to cart functionality
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const id = e.target.getAttribute('data-id');
+                const name = e.target.getAttribute('data-name');
+                const price = parseInt(e.target.getAttribute('data-price'));
+                const img = e.target.getAttribute('data-img');
+                
+                // Check if item already exists in cart
+                const existingItem = cart.find(item => item.id === id);
+                
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    cart.push({
+                        id,
+                        name,
+                        price,
+                        img,
+                        quantity: 1
+                    });
+                }
+                
+                updateCart();
+                
+                // Show cart sidebar when adding first item
+                if (cart.length === 1) {
+                    cartSidebar.classList.remove('translate-x-full');
+                    cartOverlay.classList.remove('hidden');
+                    document.body.style.overflow = 'hidden';
+                }
+                
+                // Animation feedback
+                const cartIcon = cartBtn.querySelector('i');
+                cartIcon.classList.add('animate-bounce');
+                setTimeout(() => {
+                    cartIcon.classList.remove('animate-bounce');
+                }, 500);
+            });
+        });
+        
+        // Update cart UI
+        function updateCart() {
+            // Update cart count
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            cartCount.textContent = totalItems;
+            
+            if (totalItems > 0) {
+                cartCount.classList.remove('hidden');
+            } else {
+                cartCount.classList.add('hidden');
+            }
+            
+            // Update cart items
+            cartItemsContainer.innerHTML = '';
+            
+            if (cart.length === 0) {
+                emptyCartMessage.classList.remove('hidden');
+                cartSummary.classList.add('hidden');
+            } else {
+                emptyCartMessage.classList.add('hidden');
+                cartSummary.classList.remove('hidden');
+                
+                let subtotal = 0;
+                
+                cart.forEach(item => {
+                    const itemTotal = item.price * item.quantity;
+                    subtotal += itemTotal;
+                    
+                    const cartItem = document.createElement('div');
+                    cartItem.className = 'flex items-start border-b border-gray-100 pb-4 cart-item-enter';
+                    cartItem.innerHTML = `
+                        <div class="flex-shrink-0 w-16 h-16 bg-gray-100 rounded-md overflow-hidden">
+                            <img src="${item.img}" alt="${item.name}" class="w-full h-full object-cover">
+                        </div>
+                        <div class="ml-4 flex-1">
+                            <div class="flex justify-between">
+                                <h4 class="text-sm font-medium text-gray-900">${item.name}</h4>
+                                <button class="remove-item text-gray-400 hover:text-red-500" data-id="${item.id}">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                            <div class="mt-1 flex justify-between">
+                                <div class="flex items-center">
+                                    <button class="decrease-quantity text-gray-500 hover:text-amber-600 px-2" data-id="${item.id}">
+                                        <i class="fas fa-minus text-xs"></i>
+                                    </button>
+                                    <span class="quantity mx-2 text-sm">${item.quantity}</span>
+                                    <button class="increase-quantity text-gray-500 hover:text-amber-600 px-2" data-id="${item.id}">
+                                        <i class="fas fa-plus text-xs"></i>
+                                    </button>
+                                </div>
+                                <span class="text-sm font-medium text-amber-800">${(item.price * item.quantity).toLocaleString()} FCFA</span>
+                            </div>
+                        </div>
+                    `;
+                    
+                    cartItemsContainer.appendChild(cartItem);
+                });
+                
+                // Update totals
+                document.getElementById('cart-subtotal').textContent = subtotal.toLocaleString() + ' FCFA';
+                document.getElementById('cart-total').textContent = subtotal.toLocaleString() + ' FCFA';
+                
+                // Add event listeners to quantity buttons
+                document.querySelectorAll('.remove-item').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const id = e.target.closest('button').getAttribute('data-id');
+                        cart = cart.filter(item => item.id !== id);
+                        updateCart();
+                    });
+                });
+                
+                document.querySelectorAll('.decrease-quantity').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const id = e.target.closest('button').getAttribute('data-id');
+                        const item = cart.find(item => item.id === id);
+                        
+                        if (item.quantity > 1) {
+                            item.quantity -= 1;
+                        } else {
+                            cart = cart.filter(item => item.id !== id);
+                        }
+                        
+                        updateCart();
+                    });
+                });
+                
+                document.querySelectorAll('.increase-quantity').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const id = e.target.closest('button').getAttribute('data-id');
+                        const item = cart.find(item => item.id === id);
+                        item.quantity += 1;
+                        updateCart();
+                    });
+                });
+            }
+        }
+        
+        // Checkout via WhatsApp
+        checkoutBtn.addEventListener('click', () => {
+            if (cart.length === 0) return;
+            
+            let message = "Bonjour Tarru Senegal,\n\nJe souhaite passer la commande suivante :\n\n";
+            
+            cart.forEach(item => {
+                message += `- ${item.name} (${item.quantity}x) : ${(item.price * item.quantity).toLocaleString()} FCFA\n`;
+            });
+            
+            const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+            message += `\nTotal : ${subtotal.toLocaleString()} FCFA\n\n`;
+            message += "Merci de me contacter pour finaliser la commande.\nCordialement.";
+            
+            const encodedMessage = encodeURIComponent(message);
+            window.open(`https://wa.me/393517762883?text=${encodedMessage}`, '_blank');
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        });
     </script>
-
 </body>
 </html>
