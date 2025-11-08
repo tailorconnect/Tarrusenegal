@@ -444,8 +444,8 @@
                 });
                 
                 // Update totals
-                document.getElementById('cart-subtotal').textContent = subtotal.toLocaleString() + ' FCFA';
-                document.getElementById('cart-total').textContent = subtotal.toLocaleString() + ' FCFA';
+                document.getElementById('cart-subtotal').textContent = subtotal.toLocaleString() + ' €';
+                document.getElementById('cart-total').textContent = subtotal.toLocaleString() + ' €';
                 
                 // Add event listeners to quantity buttons
                 document.querySelectorAll('.remove-item').forEach(button => {
@@ -489,11 +489,11 @@
             let message = "Bonjour Tarru Senegal,\n\nJe souhaite passer la commande suivante :\n\n";
             
             cart.forEach(item => {
-                message += `- ${item.name} (${item.quantity}x) : ${(item.price * item.quantity).toLocaleString()} FCFA\n`;
+                message += `- ${item.name} (${item.quantity}x) : ${(item.price * item.quantity).toLocaleString()} €\n`;
             });
             
             const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
-            message += `\nTotal : ${subtotal.toLocaleString()} FCFA\n\n`;
+            message += `\nTotal : ${subtotal.toLocaleString()} €\n\n`;
             message += "Merci de me contacter pour finaliser la commande.\nCordialement.";
             
             const encodedMessage = encodeURIComponent(message);
@@ -522,3 +522,4 @@
     </script>
 </body>
 </html>
+
