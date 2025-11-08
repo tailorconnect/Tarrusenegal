@@ -22,12 +22,12 @@
     </main>
 
     <!-- Panier Sidebar -->
-    <div id="cart-sidebar" class="fixed top-0 right-0 h-full w-80 bg-white shadow-lg transform translate-x-full transition-transform z-50">
+    <div id="cart-sidebar" class="fixed top-0 right-0 h-full w-80 bg-white shadow-lg transform translate-x-full transition-transform z-50 overflow-y-auto">
         <div class="p-4 flex justify-between items-center border-b">
             <h2 class="text-xl font-bold">Votre Panier</h2>
-            <button id="close-cart" class="text-gray-600 hover:text-gray-800">&times;</button>
+            <button id="close-cart" class="text-gray-600 text-2xl font-bold hover:text-gray-800">&times;</button>
         </div>
-        <div id="cart-items" class="p-4 space-y-4 overflow-y-auto h-[calc(100%-150px)]"></div>
+        <div id="cart-items" class="p-4 space-y-4"></div>
         <div class="p-4 border-t">
             <p class="font-bold text-lg">Total : <span id="cart-total">0 €</span></p>
             <button id="checkout-whatsapp" class="mt-2 w-full bg-green-500 text-white py-2 rounded hover:bg-green-600">Commander via WhatsApp</button>
@@ -35,7 +35,7 @@
     </div>
 
     <script>
-        // Tableau des produits
+        // Produits
         const products = [
             {id:1, name:"T-shirt Classique", price:25, image:"https://via.placeholder.com/300x300?text=T-shirt+1"},
             {id:2, name:"Chemise Élégante", price:40, image:"https://via.placeholder.com/300x300?text=Chemise+2"},
@@ -60,7 +60,7 @@
         const cartCount = document.getElementById('cart-count');
         const checkoutWhatsapp = document.getElementById('checkout-whatsapp');
 
-        // Afficher les produits
+        // Afficher produits
         function displayProducts() {
             productGrid.innerHTML = '';
             products.forEach(product => {
@@ -68,11 +68,11 @@
                 card.className = "bg-white shadow rounded p-4 flex flex-col items-center";
                 card.innerHTML = `
                     <img src="${product.image}" alt="${product.name}" class="mb-4 w-full h-48 object-cover rounded">
-                    <h3 class="font-bold text-lg mb-2">${product.name}</h3>
+                    <h3 class="font-bold text-lg mb-2 text-center">${product.name}</h3>
                     <p class="text-gray-700 mb-4">${product.price} €</p>
-                    <div class="flex space-x-2">
-                        <button onclick="addToCart(${product.id})" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Ajouter au panier</button>
-                        <button onclick="orderWhatsApp(${product.id},1)" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">WhatsApp</button>
+                    <div class="flex flex-col space-y-2 w-full">
+                        <button onclick="addToCart(${product.id})" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full">Ajouter au panier</button>
+                        <button onclick="orderWhatsApp(${product.id},1)" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 w-full">Commander via WhatsApp</button>
                     </div>
                 `;
                 productGrid.appendChild(card);
@@ -83,6 +83,13 @@
         function addToCart(id) {
             if(cart[id]) cart[id]++;
             else cart[id] = 1;
+            updateCart();
+        }
+
+        // Modifier quantité
+        function changeQuantity(id, delta) {
+            if(cart[id] + delta <= 0) delete cart[id];
+            else cart[id] += delta;
             updateCart();
         }
 
@@ -116,22 +123,15 @@
             cartCount.textContent = count;
         }
 
-        // Modifier la quantité
-        function changeQuantity(id, delta) {
-            if(cart[id] + delta <= 0) delete cart[id];
-            else cart[id] += delta;
-            updateCart();
-        }
-
-        // Commander via WhatsApp pour un produit spécifique
+        // Commander via WhatsApp produit unique
         function orderWhatsApp(id, quantity) {
             const product = products.find(p => p.id == id);
             const message = Bonjour, je souhaite commander :\n${product.name} - ${product.price} € x ${quantity} = ${product.price*quantity} €;
-            const url = https://wa.me/221XXXXXXXX?text=${encodeURIComponent(message)};
+            const url = https://wa.me/2213517762883?text=${encodeURIComponent(message)};
             window.open(url, '_blank');
         }
 
-        // Commander tous les produits via WhatsApp
+        // Commander tout via WhatsApp
         checkoutWhatsapp.addEventListener('click', () => {
             if(Object.keys(cart).length === 0) {
                 alert("Votre panier est vide !");
@@ -146,16 +146,18 @@
                 message += ${product.name} - ${product.price} € x ${quantity} = ${product.price*quantity} €\n;
             }
             message += Total : ${total} €;
-            const url = https://wa.me/221XXXXXXXX?text=${encodeURIComponent(message)};
+            const url = https://wa.me/2213517762883?text=${encodeURIComponent(message)};
             window.open(url, '_blank');
         });
 
-        // Afficher / cacher le panier
+        // Ouvrir / fermer panier
         cartButton.addEventListener('click', () => {
             cartSidebar.classList.remove('translate-x-full');
+            document.body.style.overflow = 'hidden';
         });
         closeCart.addEventListener('click', () => {
             cartSidebar.classList.add('translate-x-full');
+            document.body.style.overflow = 'auto';
         });
 
         // Initialisation
